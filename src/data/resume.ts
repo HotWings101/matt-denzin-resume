@@ -31,6 +31,8 @@ export interface Company {
 export interface SkillGroup {
   label: string;
   items: string[];
+  /** Custom icon (in /public/icons) for the capability card. */
+  icon?: string;
 }
 
 export interface Education {
@@ -77,6 +79,7 @@ export const profile = {
 export const competencies: SkillGroup[] = [
   {
     label: "Product Management",
+    icon: "/icons/cap-product-management.jpg",
     items: [
       "Roadmapping",
       "Backlog Prioritization",
@@ -87,6 +90,7 @@ export const competencies: SkillGroup[] = [
   },
   {
     label: "Project / Program Leadership",
+    icon: "/icons/cap-program-leadership.jpg",
     items: [
       "Scope / Schedule / Budget Control",
       "RAID Management",
@@ -96,6 +100,7 @@ export const competencies: SkillGroup[] = [
   },
   {
     label: "Technical Delivery",
+    icon: "/icons/cap-technical-delivery.jpg",
     items: [
       "Website Platforms",
       "Digital Retailing",
@@ -105,6 +110,7 @@ export const competencies: SkillGroup[] = [
   },
   {
     label: "Operations",
+    icon: "/icons/cap-operations.jpg",
     items: [
       "KPI Development",
       "Forecasting",
@@ -114,10 +120,12 @@ export const competencies: SkillGroup[] = [
   },
   {
     label: "Methodologies",
+    icon: "/icons/cap-methodologies.jpg",
     items: ["Agile", "Scrum", "Kanban", "Waterfall", "Hybrid"],
   },
   {
     label: "Tools & Platforms",
+    icon: "/icons/cap-tools-platforms.jpg",
     items: [
       "Salesforce Lightning",
       "Smartsheet",

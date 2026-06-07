@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- small self-hosted capability icons */
 import { competencies } from "@/data/resume";
 import { Section } from "./section";
 import { Reveal } from "./reveal";
@@ -20,13 +21,24 @@ export function Skills() {
         {competencies.map((group, i) => (
           <Reveal key={group.label} delay={i * 0.06}>
             <article className="card-paper flex h-full flex-col gap-5 rounded-2xl p-6">
-              <header className="flex items-baseline gap-3">
-                <span
-                  aria-hidden
-                  className="font-mono text-xs tracking-[0.18em] text-accent"
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+              <header className="flex items-center gap-3.5">
+                {group.icon ? (
+                  <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-border bg-background">
+                    <img
+                      src={group.icon}
+                      alt=""
+                      aria-hidden
+                      className="size-10 object-contain"
+                    />
+                  </span>
+                ) : (
+                  <span
+                    aria-hidden
+                    className="font-mono text-xs tracking-[0.18em] text-accent"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                )}
                 <h3 className="text-pretty text-lg leading-snug">
                   {group.label}
                 </h3>

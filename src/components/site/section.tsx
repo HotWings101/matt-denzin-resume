@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- generated section textures */
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./reveal";
@@ -13,6 +14,8 @@ interface SectionProps {
   containerClassName?: string;
   /** Render the faint engineering grid behind the section. */
   grid?: boolean;
+  /** Optional full-bleed background texture image (fades downward). */
+  textureSrc?: string;
 }
 
 /**
@@ -29,6 +32,7 @@ export function Section({
   className,
   containerClassName,
   grid = false,
+  textureSrc,
 }: SectionProps) {
   return (
     <section
@@ -40,6 +44,14 @@ export function Section({
         <div
           aria-hidden
           className="bg-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
+        />
+      )}
+      {textureSrc && (
+        <img
+          src={textureSrc}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-full w-full select-none object-cover object-top opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent_70%)]"
         />
       )}
       <div

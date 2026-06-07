@@ -41,8 +41,21 @@ export const metadata: Metadata = {
     siteName: `${profile.name} — Portfolio`,
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1376,
+        height: 768,
+        alt: `${profile.name} — ${profile.roles.join(" · ")}`,
+      },
+    ],
   },
-  twitter: { card: "summary_large_image", title, description },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og.jpg"],
+  },
   robots: { index: true, follow: true },
 };
 

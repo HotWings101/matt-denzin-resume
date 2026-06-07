@@ -70,6 +70,18 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Faint site-wide paper grain (Nano Banana-generated) — sits behind content. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: url("/textures/paper-grain.jpg") center / cover no-repeat;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
   ::selection {
     background: var(--accent);
     color: var(--accent-foreground);

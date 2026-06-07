@@ -112,7 +112,7 @@ export function ContactForm() {
       index="05"
       eyebrow="Contact"
       title="Let's talk about your AI product team."
-      grid
+      textureSrc="/textures/contact-bg.jpg"
     >
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         {/* Left — warm invite + contact list */}

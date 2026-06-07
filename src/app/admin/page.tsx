@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { AdminDashboard } from "@/components/admin/admin-dashboard";
+import { AnalyticsDashboard } from "@/components/admin/dashboard";
 import { SignOutButton } from "@/components/admin/sign-out-button";
-import { getDashboardData } from "@/lib/analytics";
+import { getAnalytics } from "@/lib/analytics";
 
 export const dynamic = "force-dynamic";
 
@@ -10,11 +10,21 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function AdminPage() {
-  const data = await getDashboardData();
+const ALLOWED_RANGES = [7, 30, 90];
+
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string }>;
+}) {
+  const sp = await searchParams;
+  const requested = Number(sp.range);
+  const days = ALLOWED_RANGES.includes(requested) ? requested : 30;
+  const data = await getAnalytics(days);
+
   return (
-    <main className="mx-auto w-full max-w-6xl px-6 py-12">
-      <AdminDashboard {...data} headerAction={<SignOutButton />} />
+    <main className="mx-auto w-full max-w-6xl px-6 py-10">
+      <AnalyticsDashboard data={data} signOut={<SignOutButton />} />
     </main>
   );
 }

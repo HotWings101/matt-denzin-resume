@@ -1,20 +1,23 @@
-import { recordEvent } from "@/lib/tracking";
+import { ingestEvent } from "@/lib/analytics-ingest";
 
-/** Only these event types are accepted, to keep the analytics stream clean. */
+/** Accepted event types — keeps the analytics stream clean. */
 const ALLOWED_TYPES = new Set([
   "page_view",
   "section_view",
+  "click",
+  "scroll_depth",
+  "page_exit",
   "cta_click",
-  "resume_download",
   "chat_open",
   "chat_started",
   "chat_question",
   "jd_submit",
   "jd_analyze_click",
   "contact_submit",
+  "resume_download",
 ]);
 
-const MAX_META_BYTES = 2048;
+const MAX_META_BYTES = 4096;
 
 export async function POST(req: Request) {
   try {
@@ -28,13 +31,18 @@ export async function POST(req: Request) {
       if (JSON.stringify(candidate).length <= MAX_META_BYTES) meta = candidate;
     }
 
-    await recordEvent({
+    await ingestEvent({
       type,
       path: body?.path ? String(body.path).slice(0, 512) : null,
       visitorId: body?.visitorId ? String(body.visitorId).slice(0, 64) : null,
+      sessionId: body?.sessionId ? String(body.sessionId).slice(0, 64) : null,
       meta,
       userAgent: req.headers.get("user-agent"),
       referrer: req.headers.get("referer"),
+      // Vercel edge geo headers (absent locally).
+      country: req.headers.get("x-vercel-ip-country"),
+      region: req.headers.get("x-vercel-ip-country-region"),
+      city: req.headers.get("x-vercel-ip-city"),
     });
   } catch (err) {
     console.error("[track] failed:", err);

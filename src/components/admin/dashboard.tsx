@@ -4,12 +4,14 @@ import { useState, type ReactNode } from "react";
 import {
   BarChart3,
   Users,
+  Fingerprint,
   MousePointerClick,
   MessagesSquare,
   Target,
   Mail,
 } from "lucide-react";
 import type { AnalyticsData } from "@/lib/analytics";
+import type { VisitorSession } from "@/lib/visitors";
 import { cn } from "@/lib/utils";
 import {
   StatCard,
@@ -20,10 +22,12 @@ import {
   relativeTime,
 } from "./ui";
 import { ClickHeatmap } from "./heatmap";
+import { VisitorsTab } from "./visitors";
 
 const TABS = [
   { id: "overview", label: "Overview", icon: BarChart3 },
   { id: "audience", label: "Audience", icon: Users },
+  { id: "visitors", label: "Visitors", icon: Fingerprint },
   { id: "engagement", label: "Engagement", icon: MousePointerClick },
   { id: "conversations", label: "Conversations", icon: MessagesSquare },
   { id: "jd", label: "JD Analyses", icon: Target },
@@ -35,9 +39,11 @@ const RANGES = [7, 30, 90];
 
 export function AnalyticsDashboard({
   data,
+  visitors,
   signOut,
 }: {
   data: AnalyticsData;
+  visitors: VisitorSession[];
   signOut: ReactNode;
 }) {
   const [tab, setTab] = useState<TabId>("overview");
@@ -100,8 +106,11 @@ export function AnalyticsDashboard({
       </div>
 
       {/* Tab content */}
-      {tab === "overview" && <Overview data={data} />}
+      {tab === "overview" && (
+        <Overview data={data} onVisitors={() => setTab("visitors")} />
+      )}
       {tab === "audience" && <Audience data={data} />}
+      {tab === "visitors" && <VisitorsTab sessions={visitors} />}
       {tab === "engagement" && <Engagement data={data} />}
       {tab === "conversations" && <Conversations data={data} />}
       {tab === "jd" && <JdAnalyses data={data} />}
@@ -110,12 +119,24 @@ export function AnalyticsDashboard({
   );
 }
 
-function Overview({ data }: { data: AnalyticsData }) {
+function Overview({
+  data,
+  onVisitors,
+}: {
+  data: AnalyticsData;
+  onVisitors: () => void;
+}) {
   const t = data.totals;
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <StatCard label="Unique visitors" value={t.uniqueVisitors} />
+        <button
+          type="button"
+          onClick={onVisitors}
+          className="rounded-xl text-left transition hover:opacity-80 focus-visible:outline-2 focus-visible:outline-accent"
+        >
+          <StatCard label="Unique visitors  ↗" value={t.uniqueVisitors} />
+        </button>
         <StatCard label="Sessions" value={t.sessions} />
         <StatCard label="Page views" value={t.pageViews} />
         <StatCard

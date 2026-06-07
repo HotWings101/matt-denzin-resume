@@ -23,6 +23,8 @@ export interface Company {
   location: string;
   /** Short descriptor of the company for context. */
   context: string;
+  /** Path to the company logo in /public. */
+  logo?: string;
   positions: Position[];
 }
 
@@ -132,6 +134,7 @@ export const competencies: SkillGroup[] = [
 export const experience: Company[] = [
   {
     name: "Cox Automotive Inc.",
+    logo: "/logos/employers/cox.svg",
     location: "Dallas–Fort Worth Metroplex",
     context:
       "One of the world's largest automotive technology and services companies, home to Autotrader, Kelley Blue Book, Dealer.com, and HomeNet.",
@@ -191,6 +194,7 @@ export const experience: Company[] = [
   },
   {
     name: "Dealertrack / Dealer.com",
+    logo: "/logos/employers/dealertrack.png",
     location: "Dallas–Fort Worth Metroplex",
     context:
       "Leading provider of dealership websites, digital marketing, and DMS software (now part of Cox Automotive).",
@@ -239,6 +243,7 @@ export const experience: Company[] = [
   },
   {
     name: "ClickMotive",
+    logo: "/logos/employers/clickmotive.png",
     location: "Dallas–Fort Worth Metroplex",
     context:
       "Automotive digital marketing and website platform provider serving OEM dealer programs.",

@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { WebSocket as WS } from "ws";
 
 /**
  * Cookie-bound Supabase client for Server Components / Route Handlers.
@@ -11,6 +12,7 @@ export async function createSupabaseServerClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      realtime: { transport: WS as unknown as typeof WebSocket },
       cookies: {
         getAll() {
           return cookieStore.getAll();

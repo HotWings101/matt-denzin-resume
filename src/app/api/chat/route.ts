@@ -3,9 +3,9 @@ import {
   convertToModelMessages,
   createUIMessageStream,
   createUIMessageStreamResponse,
-  gateway,
   type UIMessage,
 } from "ai";
+import { google } from "@ai-sdk/google";
 import { CHAT_MODEL } from "@/lib/ai/models";
 import {
   retrieveContext,
@@ -113,7 +113,7 @@ export async function POST(req: Request) {
           writer.write({ type: "data-citations", data: citations });
         }
         const result = streamText({
-          model: gateway(CHAT_MODEL),
+          model: google(CHAT_MODEL),
           system,
           messages: modelMessages,
           temperature: 0.3,

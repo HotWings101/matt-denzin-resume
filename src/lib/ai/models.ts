@@ -1,10 +1,10 @@
 /**
- * Model configuration. Models are addressed as "provider/model" strings and
- * routed through the Vercel AI Gateway (unified billing + fallback).
+ * Model configuration. All AI processing runs on Google Gemini via the
+ * @ai-sdk/google provider, which reads GOOGLE_GENERATIVE_AI_API_KEY.
  */
-export const CHAT_MODEL = process.env.CHAT_MODEL || "anthropic/claude-sonnet-4-6";
+export const CHAT_MODEL = process.env.CHAT_MODEL || "gemini-3.5-flash";
 export const EMBEDDING_MODEL =
-  process.env.EMBEDDING_MODEL || "openai/text-embedding-3-small";
+  process.env.EMBEDDING_MODEL || "gemini-embedding-001";
 
-/** Dimensions for text-embedding-3-small — must match the pgvector column. */
+/** Output dimensionality for embeddings — must match the pgvector column. */
 export const EMBEDDING_DIMENSIONS = 1536;

@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { WebSocket as WS } from "ws";
 
 /**
  * Service-role Supabase client. SERVER-ONLY — bypasses RLS.
@@ -17,6 +18,9 @@ export function getAdminClient(): SupabaseClient {
   }
   cached = createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
+    // supabase-js realtime needs a global WebSocket; Node < 22 lacks one.
+    // Vercel runs Node 22+, so this transport is a harmless local-dev shim.
+    realtime: { transport: WS as unknown as typeof WebSocket },
   });
   return cached;
 }

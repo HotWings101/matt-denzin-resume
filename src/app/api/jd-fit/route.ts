@@ -1,4 +1,5 @@
-import { generateObject, gateway } from "ai";
+import { generateObject } from "ai";
+import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { CHAT_MODEL } from "@/lib/ai/models";
 import { jdFitSystemPrompt } from "@/lib/ai/prompts";
@@ -59,7 +60,7 @@ export async function POST(req: Request) {
 
   try {
     const { object } = await generateObject({
-      model: gateway(CHAT_MODEL),
+      model: google(CHAT_MODEL),
       schema: fitSchema,
       system: jdFitSystemPrompt(fullCareerContext()),
       prompt: `Analyze how well Matt fits the following job description. Be specific and calibrated.\n\n<job_description>\n${jd}\n</job_description>`,

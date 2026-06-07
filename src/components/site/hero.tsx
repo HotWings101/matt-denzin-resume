@@ -7,17 +7,19 @@ import { Reveal } from "./reveal";
 export function Hero() {
   return (
     <section id="top" data-section="hero" className="relative overflow-hidden">
-      {/* Atmosphere */}
-      <div
+      {/* Atmosphere — Nano Banana-generated topographic paper texture */}
+      <img
+        src="/textures/hero-bg.jpg"
+        alt=""
         aria-hidden
-        className="bg-dots pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black,transparent)]"
+        className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover opacity-70 [mask-image:linear-gradient(to_bottom,black_45%,transparent_92%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 size-[42rem] -translate-x-1/2 rounded-full opacity-50 blur-3xl"
+        className="pointer-events-none absolute -top-40 left-1/2 size-[42rem] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
         style={{
           background:
-            "radial-gradient(circle, rgba(79,70,229,0.16), transparent 60%)",
+            "radial-gradient(circle, rgba(79,70,229,0.14), transparent 60%)",
         }}
       />
 

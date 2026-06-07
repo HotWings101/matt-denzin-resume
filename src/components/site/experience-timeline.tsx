@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- small self-hosted employer logos */
 import { experience } from "@/data/resume";
 import type { Position } from "@/data/resume";
 import { Badge } from "@/components/ui/badge";
@@ -79,17 +80,28 @@ export function ExperienceTimeline() {
           <Reveal key={company.name} delay={companyIndex * 0.04}>
             <article>
               {/* Company header */}
-              <header className="mb-7">
-                <h3 className="font-display text-2xl leading-tight text-foreground md:text-[1.7rem]">
-                  {company.name}
-                </h3>
-                <p className="mt-1.5 max-w-2xl text-pretty text-sm leading-relaxed text-muted">
-                  <span className="text-foreground/70">{company.location}</span>
-                  <span aria-hidden className="mx-2 text-faint">
-                    /
+              <header className="mb-7 flex items-start gap-4">
+                {company.logo && (
+                  <span className="mt-0.5 inline-flex h-11 shrink-0 items-center rounded-xl border border-border bg-white px-3 shadow-[0_1px_2px_rgba(27,24,19,0.05)]">
+                    <img
+                      src={company.logo}
+                      alt={`${company.name} logo`}
+                      className="h-5 w-auto max-w-[7rem] object-contain"
+                    />
                   </span>
-                  {company.context}
-                </p>
+                )}
+                <div>
+                  <h3 className="font-display text-2xl leading-tight text-foreground md:text-[1.7rem]">
+                    {company.name}
+                  </h3>
+                  <p className="mt-1.5 max-w-2xl text-pretty text-sm leading-relaxed text-muted">
+                    <span className="text-foreground/70">{company.location}</span>
+                    <span aria-hidden className="mx-2 text-faint">
+                      /
+                    </span>
+                    {company.context}
+                  </p>
+                </div>
               </header>
 
               {/* Vertical hairline rail */}

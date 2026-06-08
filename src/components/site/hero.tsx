@@ -95,24 +95,22 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Brand strip — on bone, below the image */}
+      {/* Brand strip — on bone, below the image (centered) */}
       <div className="border-t border-border bg-background">
-        <div className="mx-auto w-full max-w-6xl px-6 py-8">
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
-            <span className="eyebrow shrink-0">Programs shipped for</span>
-            <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
-              {brandLogos.map((b) => (
-                <img
-                  key={b.name}
-                  src={b.src}
-                  alt={b.name}
-                  width={88}
-                  height={24}
-                  loading="lazy"
-                  className="h-6 w-auto max-w-[5.5rem] object-contain opacity-55 grayscale transition duration-200 hover:opacity-100 hover:grayscale-0"
-                />
-              ))}
-            </div>
+        <div className="mx-auto w-full max-w-6xl px-6 py-9">
+          <p className="eyebrow text-center">Programs shipped for</p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-9 gap-y-5">
+            {brandLogos.map((b) => (
+              <img
+                key={b.name}
+                src={b.src}
+                alt={b.name}
+                width={112}
+                height={32}
+                loading="lazy"
+                className="h-8 w-auto max-w-[7rem] object-contain opacity-60 grayscale transition duration-200 hover:opacity-100 hover:grayscale-0"
+              />
+            ))}
           </div>
         </div>
       </div>

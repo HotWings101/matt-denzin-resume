@@ -132,6 +132,24 @@ export const knowledge: KnowledgePassage[] = [
       "shipped product",
     ],
   },
+  {
+    id: "scale-breadth",
+    topic: "Scale and breadth of delivery",
+    source: "Career highlight",
+    content:
+      "Matt has delivered at serious scale. He designed the processes and project-managed multiple cross-functional teams that implemented and launched over 5,000 websites. That work spanned fintech products and integrations; OEM integrations including incentives, DMS (dealer management system) integrations, and digital retailing; and the full range of digital marketing, including SEO. The throughline is repeatable, well-run process plus multi-team leadership that ships large volumes of integrated, revenue-generating web properties reliably.",
+    tags: [
+      "scale",
+      "websites",
+      "fintech",
+      "dms integration",
+      "digital retailing",
+      "seo",
+      "oem integrations",
+      "process design",
+      "team leadership",
+    ],
+  },
 ];
 
 /** Starter questions shown as chips under the hero chat input. */

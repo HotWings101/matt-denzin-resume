@@ -406,6 +406,6 @@ export const brandLogos = [
 export const stats = [
   { value: "15+", label: "Years in product & delivery" },
   { value: "8", label: "Global OEM brands shipped" },
-  { value: "250+", label: "Dealer sites supported" },
+  { value: "5,000+", label: "Websites launched" },
   { value: "PMP", label: "Certified since 2018" },
 ] as const;

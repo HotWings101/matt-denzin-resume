@@ -79,6 +79,14 @@ export function Hero() {
             </Reveal>
           </div>
 
+          <Reveal onMount delay={0.3}>
+            <p className="mt-10 max-w-2xl text-pretty text-base leading-relaxed text-white/80">
+              I design the processes and lead the cross-functional teams behind
+              5,000+ launched websites — spanning fintech products, OEM
+              integrations (incentives, DMS, and digital retailing), and SEO.
+            </p>
+          </Reveal>
+
           {/* Stat strip */}
           <Reveal onMount delay={0.34}>
             <dl className="mt-12 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-white/15 pt-8 sm:grid-cols-4">

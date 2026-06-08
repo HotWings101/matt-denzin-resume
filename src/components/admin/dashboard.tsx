@@ -9,6 +9,7 @@ import {
   MessagesSquare,
   Target,
   Mail,
+  Bot,
 } from "lucide-react";
 import type { AnalyticsData } from "@/lib/analytics";
 import type { VisitorSession } from "@/lib/visitors";
@@ -190,6 +191,36 @@ function Audience({ data }: { data: AnalyticsData }) {
       </Panel>
       <Panel title="Browsers">
         <BarList items={data.browsers} accentClass="bg-foreground" />
+      </Panel>
+      <Panel title="AI / LLM crawler visits" className="md:col-span-2">
+        {data.crawlers.length === 0 ? (
+          <p className="text-sm text-muted">
+            No AI crawlers detected yet — GPTBot, ClaudeBot, PerplexityBot,
+            Google-Extended and others will appear here once they index the site.
+          </p>
+        ) : (
+          <ul className="divide-y divide-border">
+            {data.crawlers.map((c) => (
+              <li
+                key={c.bot}
+                className="flex items-center justify-between gap-3 py-2.5"
+              >
+                <span className="flex items-center gap-2 text-sm text-foreground">
+                  <Bot className="size-4 text-accent" />
+                  {c.bot}
+                </span>
+                <span className="flex items-center gap-5">
+                  <span className="font-mono text-xs text-muted">
+                    {c.count} {c.count === 1 ? "visit" : "visits"}
+                  </span>
+                  <span className="font-mono text-[0.7rem] text-faint">
+                    last {relativeTime(c.lastSeen)}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </Panel>
     </div>
   );

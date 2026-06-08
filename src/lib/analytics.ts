@@ -54,6 +54,7 @@ export interface AnalyticsData {
   devices: Counted[];
   browsers: Counted[];
   countries: Counted[];
+  crawlers: { bot: string; count: number; lastSeen: string }[];
   sectionViews: Counted[];
   scrollDistribution: { depth: number; count: number }[];
   topQuestions: Counted[];
@@ -81,6 +82,7 @@ const EMPTY: AnalyticsData = {
   devices: [],
   browsers: [],
   countries: [],
+  crawlers: [],
   sectionViews: [],
   scrollDistribution: [25, 50, 75, 100].map((depth) => ({ depth, count: 0 })),
   topQuestions: [],
@@ -143,6 +145,7 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       jdRows,
       contactRows,
       chatSessRes,
+      crawlerRes,
     ] = await Promise.all([
       supabase.from("events").select("*", { count: "exact", head: true }).eq("type", "page_view").gte("created_at", since),
       supabase.from("jd_analyses").select("*", { count: "exact", head: true }).gte("created_at", since),
@@ -157,6 +160,7 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       supabase.from("jd_analyses").select("role_title,company,fit_score,created_at,jd_text").gte("created_at", since).order("created_at", { ascending: false }).limit(50),
       supabase.from("contact_messages").select("name,email,message,created_at").gte("created_at", since).order("created_at", { ascending: false }).limit(50),
       supabase.from("chat_sessions").select("id,created_at,visitor_id").gte("created_at", since).order("created_at", { ascending: false }).limit(40),
+      supabase.from("events").select("meta,created_at").eq("type", "crawler_visit").gte("created_at", since).order("created_at", { ascending: false }).limit(3000),
     ]);
 
     const sessions = (sessionsRes.data ?? []) as Array<{
@@ -200,6 +204,20 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
     const devices = tally(sessions.map((s) => s.device), 6);
     const browsers = tally(sessions.map((s) => s.browser), 8);
     const countries = tally(sessions.map((s) => s.country), 12);
+
+    const crawlerMap = new Map<string, { count: number; lastSeen: string }>();
+    for (const r of (crawlerRes.data ?? []) as Array<{
+      meta: Meta;
+      created_at: string;
+    }>) {
+      const bot = ((r.meta as Meta)?.bot as string) || "unknown";
+      const existing = crawlerMap.get(bot);
+      if (existing) existing.count += 1;
+      else crawlerMap.set(bot, { count: 1, lastSeen: r.created_at }); // rows desc → first is latest
+    }
+    const crawlers = [...crawlerMap.entries()]
+      .map(([bot, v]) => ({ bot, count: v.count, lastSeen: v.lastSeen }))
+      .sort((a, b) => b.count - a.count);
 
     const sectionViews = tally(
       (sectionRows.data ?? []).map((r) => (r.meta as Meta)?.section as string | undefined),
@@ -276,6 +294,7 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       devices,
       browsers,
       countries,
+      crawlers,
       sectionViews,
       scrollDistribution,
       heatmap: { points: heatmapPoints, topClicks },

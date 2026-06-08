@@ -1,7 +1,14 @@
 import type { NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
+import { detectAICrawler, logCrawlerVisit } from "@/lib/crawlers";
 
 export async function middleware(request: NextRequest) {
+  const ua = request.headers.get("user-agent");
+  const bot = detectAICrawler(ua);
+  if (bot) {
+    // Log AI/LLM crawler visits so they show up in the analytics dashboard.
+    await logCrawlerVisit(bot, request.nextUrl.pathname, ua);
+  }
   return updateSession(request);
 }
 

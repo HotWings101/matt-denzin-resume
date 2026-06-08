@@ -116,6 +116,22 @@ export const knowledge: KnowledgePassage[] = [
       "Matt is based in the Dallas–Fort Worth Metroplex and is open to AI-first product and product/program management opportunities. He can be reached by email at mattdenzin@yahoo.com or by phone at (972) 489-6324, and his LinkedIn profile is linkedin.com/in/matt-denzin-pmp-6b326110. Recruiters can also use the job-description fit analyzer on this site to see how his experience maps to a specific role.",
     tags: ["contact", "email", "phone", "linkedin", "location"],
   },
+  {
+    id: "ai-build",
+    topic: "Hands-on AI product work",
+    source: "AI & Product Innovation",
+    content:
+      "Beyond AI strategy, Matt has hands-on, shipped experience building with modern AI. He conceived, scoped, and shipped an AI-native product — this very website — including a retrieval-augmented-generation (RAG) career chatbot that answers questions grounded in his résumé with citations, and an LLM-powered job-description fit analyzer that returns a structured fit score, mapped strengths, and honest gaps. He designed the system and grounding prompts to prevent hallucination and resist prompt injection, built the embeddings and vector-search retrieval on Supabase pgvector, integrated the large language models through the Vercel AI SDK (Google Gemini), generated original brand imagery with a generative image model, and instrumented the product with a custom analytics pipeline (sessions, click heatmaps, bounce rate). He built it through AI-assisted (agentic) development while owning the product vision, scope, design direction, and iterative QA end to end — demonstrating he can not only manage AI products but ship one.",
+    tags: [
+      "ai",
+      "rag",
+      "llm",
+      "prompt engineering",
+      "embeddings",
+      "ai-assisted development",
+      "shipped product",
+    ],
+  },
 ];
 
 /** Starter questions shown as chips under the hero chat input. */

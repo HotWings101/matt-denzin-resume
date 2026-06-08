@@ -78,6 +78,19 @@ export const profile = {
 
 export const competencies: SkillGroup[] = [
   {
+    label: "AI & Product Innovation",
+    icon: "/icons/cap-ai-innovation.jpg",
+    items: [
+      "AI Product Strategy",
+      "LLM Application Design",
+      "Retrieval-Augmented Generation (RAG)",
+      "Prompt Engineering",
+      "Vector Search & Embeddings",
+      "AI-Assisted Development",
+      "Rapid Prototyping & Shipping",
+    ],
+  },
+  {
     label: "Product Management",
     icon: "/icons/cap-product-management.jpg",
     items: [
@@ -135,6 +148,10 @@ export const competencies: SkillGroup[] = [
       "Power BI",
       "Power Platform",
       "HTML / CSS / JS",
+      "Next.js",
+      "Vercel AI SDK",
+      "Supabase / pgvector",
+      "Google Gemini",
     ],
   },
 ];

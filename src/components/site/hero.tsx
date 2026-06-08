@@ -50,7 +50,7 @@ export function Hero() {
 
             <Reveal onMount delay={0.12}>
               <h2 className="mt-3 max-w-3xl text-balance text-[3rem] leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                Built to lead. Engineered to scale.
+                A proven leader your future needs.
               </h2>
             </Reveal>
 

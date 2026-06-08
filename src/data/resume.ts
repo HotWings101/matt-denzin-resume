@@ -296,6 +296,44 @@ export const experience: Company[] = [
   },
 ];
 
+export interface Project {
+  title: string;
+  timeframe: string;
+  role: string;
+  summary: string;
+  highlights: string[];
+  stack: string[];
+  links: { label: string; href: string }[];
+}
+
+/** Featured self-directed project — this AI-native site itself. */
+export const selectedProject: Project = {
+  title: "AI-First Portfolio Platform",
+  timeframe: "2026 · Self-directed",
+  role: "Product & build · AI-assisted development",
+  summary:
+    "Conceived, scoped, and shipped this very website — an AI-native, fully instrumented résumé product — owning the vision, feature scope, prompt and grounding design, QA, and deployment.",
+  highlights: [
+    "Retrieval-augmented (RAG) career chat that answers questions grounded in the résumé, with source citations.",
+    "LLM-powered job-description fit analyzer returning a structured fit score, mapped strengths, and honest gaps.",
+    "Custom product-analytics pipeline — sessions, click heatmaps, bounce rate, and a per-visitor journey dashboard.",
+    "System and grounding prompts designed to prevent hallucination and resist prompt injection.",
+  ],
+  stack: [
+    "Next.js",
+    "TypeScript",
+    "Google Gemini",
+    "Vercel AI SDK",
+    "Supabase",
+    "pgvector",
+    "Tailwind CSS",
+  ],
+  links: [
+    { label: "Try the career chat", href: "#ask" },
+    { label: "Try the JD-fit analyzer", href: "#jd-fit" },
+  ],
+};
+
 export const education: Education[] = [
   {
     school: "University of North Texas — Mayborn School of Journalism",

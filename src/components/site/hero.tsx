@@ -49,14 +49,14 @@ export function Hero() {
             </Reveal>
 
             <Reveal onMount delay={0.12}>
-              <p className="mt-4 font-mono text-sm uppercase tracking-[0.18em] text-white/75">
-                {profile.roles.join("  ·  ")}
-              </p>
+              <h2 className="mt-3 max-w-3xl text-balance text-[3rem] leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                Built to lead. Engineered to scale.
+              </h2>
             </Reveal>
 
             <Reveal onMount delay={0.18}>
-              <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-white/85">
-                {profile.pitch}
+              <p className="mt-5 font-mono text-sm uppercase tracking-[0.18em] text-white/75">
+                {profile.roles.join("  ·  ")}
               </p>
             </Reveal>
 

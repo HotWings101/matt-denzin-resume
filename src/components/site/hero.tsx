@@ -50,7 +50,7 @@ export function Hero() {
 
             <Reveal onMount delay={0.12}>
               <h2 className="mt-3 max-w-3xl text-balance text-[3rem] leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                A proven leader your future needs.
+                The proven leader your future needs.
               </h2>
             </Reveal>
 
@@ -81,9 +81,9 @@ export function Hero() {
 
           <Reveal onMount delay={0.3}>
             <p className="mt-10 max-w-2xl text-pretty text-base leading-relaxed text-white/80">
-              I design the processes and lead the cross-functional teams behind
-              5,000+ launched websites — spanning fintech products, OEM
-              integrations (incentives, DMS, and digital retailing), and SEO.
+              A PMP-certified product and operations leader who turns complex,
+              ambitious programs into shipped, scalable products — now leading
+              the shift to AI-first.
             </p>
           </Reveal>
 

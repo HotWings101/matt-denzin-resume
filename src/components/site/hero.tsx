@@ -1,84 +1,91 @@
-/* eslint-disable @next/next/no-img-element -- small self-hosted brand SVGs */
+/* eslint-disable @next/next/no-img-element -- hero banner + small brand SVGs */
 import { ArrowRight } from "lucide-react";
 import { profile, stats, brandLogos } from "@/data/resume";
-import { CareerChat } from "./career-chat";
 import { Reveal } from "./reveal";
 
 export function Hero() {
   return (
-    <section id="top" data-section="hero" className="relative overflow-hidden">
-      {/* Atmosphere — Nano Banana-generated topographic paper texture */}
-      <img
-        src="/textures/hero-bg.jpg"
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover opacity-70 [mask-image:linear-gradient(to_bottom,black_45%,transparent_92%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 size-[42rem] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(79,70,229,0.14), transparent 60%)",
-        }}
-      />
+    <section id="top" data-section="hero" className="relative">
+      {/* Full-bleed cinematic hero image (Alamo · Texas dusk · future-tech) */}
+      <div className="relative min-h-[88vh] w-full overflow-hidden">
+        <img
+          src="/hero/hero-banner.jpg"
+          alt="The Alamo at dusk beneath a warm Texas sunset and a futuristic constellation data-grid sky, with the San Antonio skyline in the distance"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Scrims for text legibility */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(20,18,14,0.88) 0%, rgba(20,18,14,0.42) 40%, rgba(20,18,14,0.12) 62%, rgba(20,18,14,0.38) 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(20,18,14,0.55), transparent 65%)",
+          }}
+        />
 
-      <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 pb-16 pt-28 md:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-24">
-        {/* Left — positioning */}
-        <div>
-          <Reveal onMount>
-            <p className="eyebrow flex items-center gap-2">
-              <span className="inline-block size-1.5 rounded-full bg-accent" />
-              {profile.location} · Open to AI-first product roles
-            </p>
-          </Reveal>
+        {/* Overlaid content, anchored bottom-left */}
+        <div className="relative mx-auto flex min-h-[88vh] w-full max-w-6xl flex-col justify-end px-6 pb-16 pt-28">
+          <div className="max-w-3xl">
+            <Reveal onMount>
+              <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-white/70">
+                <span className="inline-block size-1.5 rounded-full bg-accent" />
+                {profile.location} · Open to AI-first product roles
+              </p>
+            </Reveal>
 
-          <Reveal onMount delay={0.06}>
-            <h1 className="mt-5 text-[3.1rem] leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-              {profile.name}
-            </h1>
-          </Reveal>
+            <Reveal onMount delay={0.06}>
+              <h1 className="mt-4 text-[3rem] leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                {profile.name}
+              </h1>
+            </Reveal>
 
-          <Reveal onMount delay={0.12}>
-            <p className="mt-4 font-mono text-sm uppercase tracking-[0.18em] text-muted">
-              {profile.roles.join("  ·  ")}
-            </p>
-          </Reveal>
+            <Reveal onMount delay={0.12}>
+              <p className="mt-4 font-mono text-sm uppercase tracking-[0.18em] text-white/75">
+                {profile.roles.join("  ·  ")}
+              </p>
+            </Reveal>
 
-          <Reveal onMount delay={0.18}>
-            <div className="mt-6 h-px w-24 bg-clay/60" />
-            <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-foreground/80">
-              {profile.pitch}
-            </p>
-          </Reveal>
+            <Reveal onMount delay={0.18}>
+              <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-white/85">
+                {profile.pitch}
+              </p>
+            </Reveal>
 
-          <Reveal onMount delay={0.26}>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="#experience"
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-[0.95rem] font-medium text-accent-foreground shadow-[0_8px_24px_-12px_rgba(79,70,229,0.6)] transition-all hover:bg-accent-strong active:scale-[0.98]"
-              >
-                Explore my work
-                <ArrowRight className="size-4" />
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex h-12 items-center rounded-full border border-border-strong bg-surface px-6 text-[0.95rem] font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
-              >
-                Get in touch
-              </a>
-            </div>
-          </Reveal>
+            <Reveal onMount delay={0.26}>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a
+                  href="#ask"
+                  className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-[0.95rem] font-medium text-accent-foreground shadow-[0_8px_30px_-10px_rgba(79,70,229,0.7)] transition-all hover:bg-accent-strong active:scale-[0.98]"
+                >
+                  Interview my career
+                  <ArrowRight className="size-4" />
+                </a>
+                <a
+                  href="#experience"
+                  className="inline-flex h-12 items-center rounded-full border border-white/30 bg-white/5 px-6 text-[0.95rem] font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/15"
+                >
+                  Explore my work
+                </a>
+              </div>
+            </Reveal>
+          </div>
 
           {/* Stat strip */}
           <Reveal onMount delay={0.34}>
-            <dl className="mt-12 grid max-w-lg grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
+            <dl className="mt-12 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-white/15 pt-8 sm:grid-cols-4">
               {stats.map((s) => (
                 <div key={s.label}>
-                  <dt className="font-display text-3xl text-foreground">
-                    {s.value}
-                  </dt>
-                  <dd className="mt-1 text-xs leading-snug text-muted">
+                  <dt className="font-display text-3xl text-white">{s.value}</dt>
+                  <dd className="mt-1 text-xs leading-snug text-white/65">
                     {s.label}
                   </dd>
                 </div>
@@ -86,24 +93,12 @@ export function Hero() {
             </dl>
           </Reveal>
         </div>
-
-        {/* Right — the AI surface */}
-        <Reveal onMount delay={0.2}>
-          <div className="lg:pl-4">
-            <CareerChat />
-            <p className="mt-3 px-1 text-center text-sm text-muted">
-              This site is itself an AI product — interrogate Matt&apos;s 15-year
-              record in plain language.
-            </p>
-          </div>
-        </Reveal>
       </div>
 
-      {/* Brand strip */}
-      <Reveal onMount delay={0.4}>
-        <div className="relative mx-auto w-full max-w-6xl px-6 pb-14">
-          <div className="rule mb-6" />
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+      {/* Brand strip — on bone, below the image */}
+      <div className="border-t border-border bg-background">
+        <div className="mx-auto w-full max-w-6xl px-6 py-8">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
             <span className="eyebrow shrink-0">Programs shipped for</span>
             <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
               {brandLogos.map((b) => (
@@ -120,7 +115,7 @@ export function Hero() {
             </div>
           </div>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

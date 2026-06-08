@@ -13,6 +13,7 @@ interface NavLink {
 }
 
 const links: NavLink[] = [
+  { href: "#ask", label: "Ask AI" },
   { href: "#experience", label: "Experience" },
   { href: "#skills", label: "Capabilities" },
   { href: "#jd-fit", label: "Fit Analyzer" },
@@ -59,7 +60,12 @@ export function SiteNav() {
           onClick={() => setOpen(false)}
           className="group flex items-center gap-2.5 rounded-full"
         >
-          <span className="font-display text-lg font-medium tracking-tight text-foreground transition-colors group-hover:text-accent">
+          <span
+            className={cn(
+              "font-display text-lg font-medium tracking-tight transition-colors group-hover:text-accent",
+              scrolled || open ? "text-foreground" : "text-white",
+            )}
+          >
             {profile.shortName}
           </span>
           <Badge variant="mono" className="px-2 py-0.5">
@@ -73,7 +79,12 @@ export function SiteNav() {
             <a
               key={link.href}
               href={link.href}
-              className="rounded-full px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-foreground"
+              className={cn(
+                "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                scrolled
+                  ? "text-muted hover:text-foreground"
+                  : "text-white/80 hover:text-white",
+              )}
             >
               {link.label}
             </a>

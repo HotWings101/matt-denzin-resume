@@ -41,6 +41,8 @@ export interface Education {
   credential: string;
   years: string;
   activities?: string[];
+  /** Logo path in /public. */
+  logo?: string;
 }
 
 export interface Certification {
@@ -48,6 +50,8 @@ export interface Certification {
   issuer: string;
   issued: string;
   credentialId?: string;
+  /** Logo path in /public. */
+  logo?: string;
 }
 
 export interface Recommendation {
@@ -337,6 +341,7 @@ export const selectedProject: Project = {
 export const education: Education[] = [
   {
     school: "University of North Texas — Mayborn School of Journalism",
+    logo: "/logos/edu/unt.png",
     detail: "B.A., Advertising (Minor: Marketing)",
     credential: "Bachelor of Arts",
     years: "2004–2008",
@@ -351,6 +356,7 @@ export const education: Education[] = [
 export const certifications: Certification[] = [
   {
     name: "Project Management Professional (PMP)®",
+    logo: "/logos/edu/pmi.png",
     issuer: "Project Management Institute",
     issued: "Mar 2018",
     credentialId: "4220554",

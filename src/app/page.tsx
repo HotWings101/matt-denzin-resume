@@ -4,6 +4,7 @@ import { Hero } from "@/components/site/hero";
 import { Section } from "@/components/site/section";
 import { CareerChat } from "@/components/site/career-chat";
 import { ExperienceTimeline } from "@/components/site/experience-timeline";
+import { EducationSection } from "@/components/site/education";
 import { Skills } from "@/components/site/skills";
 import { JdAnalyzer } from "@/components/site/jd-analyzer";
 import { Recommendations } from "@/components/site/recommendations";
@@ -38,6 +39,7 @@ export default function Home() {
           </div>
         </Section>
         <ExperienceTimeline />
+        <EducationSection />
         <Skills />
         <Recommendations />
         <ContactForm />

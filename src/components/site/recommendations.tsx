@@ -11,7 +11,7 @@ export function Recommendations() {
   return (
     <Section
       id="recommendations"
-      index="04"
+      index="05"
       eyebrow="Endorsements"
       title="What colleagues say."
       grid

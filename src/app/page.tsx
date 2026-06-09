@@ -25,6 +25,7 @@ export default function Home() {
       <SiteNav />
       <main id="main" className="flex-1">
         <Hero />
+        <JdAnalyzer />
         <Section
           id="ask"
           eyebrow="AI concierge"
@@ -38,7 +39,6 @@ export default function Home() {
         </Section>
         <ExperienceTimeline />
         <Skills />
-        <JdAnalyzer />
         <Recommendations />
         <ContactForm />
       </main>

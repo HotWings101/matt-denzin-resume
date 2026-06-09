@@ -145,7 +145,7 @@ export function ExperienceTimeline() {
   return (
     <Section
       id="experience"
-      index="01"
+      index="02"
       eyebrow="Experience"
       title="Fifteen years turning complex programs into shipped outcomes."
       grid

@@ -83,7 +83,7 @@ export function JdAnalyzer() {
   return (
     <Section
       id="jd-fit"
-      index="03"
+      index="01"
       eyebrow="For recruiters"
       title="Paste a job description. See the fit, instantly."
       intro="A grounded analysis of how Matt's experience maps to your specific role — strengths, honest gaps, and a tailored pitch."

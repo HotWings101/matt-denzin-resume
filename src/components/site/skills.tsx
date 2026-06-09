@@ -12,7 +12,7 @@ export function Skills() {
   return (
     <Section
       id="skills"
-      index="02"
+      index="03"
       eyebrow="Capabilities"
       title="A product leader's toolkit."
       grid

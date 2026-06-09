@@ -20,7 +20,7 @@ export function EducationSection() {
   return (
     <Section
       id="education"
-      index="03"
+      index="04"
       eyebrow="Credentials"
       title="Education & certifications."
       grid

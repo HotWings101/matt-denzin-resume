@@ -26,9 +26,9 @@ export default function Home() {
         <Hero />
         <JdAnalyzer />
         <ExperienceTimeline />
+        <Recommendations />
         <EducationSection />
         <Skills />
-        <Recommendations />
         <ContactForm />
       </main>
       <SiteFooter />

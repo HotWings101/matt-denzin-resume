@@ -15,9 +15,9 @@ interface NavLink {
 const links: NavLink[] = [
   { href: "#jd-fit", label: "Fit Analyzer" },
   { href: "#experience", label: "Experience" },
+  { href: "#recommendations", label: "Endorsements" },
   { href: "#education", label: "Education" },
   { href: "#skills", label: "Capabilities" },
-  { href: "#recommendations", label: "Endorsements" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;

@@ -14,7 +14,6 @@ interface NavLink {
 
 const links: NavLink[] = [
   { href: "#jd-fit", label: "Fit Analyzer" },
-  { href: "#ask", label: "Ask AI" },
   { href: "#experience", label: "Experience" },
   { href: "#education", label: "Education" },
   { href: "#skills", label: "Capabilities" },

@@ -63,10 +63,10 @@ export function Hero() {
             <Reveal onMount delay={0.26}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
-                  href="#ask"
+                  href="#jd-fit"
                   className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-[0.95rem] font-medium text-accent-foreground shadow-[0_8px_30px_-10px_rgba(79,70,229,0.7)] transition-all hover:bg-accent-strong active:scale-[0.98]"
                 >
-                  Interview my career
+                  Check your role&apos;s fit
                   <ArrowRight className="size-4" />
                 </a>
                 <a

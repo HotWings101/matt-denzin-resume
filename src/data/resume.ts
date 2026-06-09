@@ -332,10 +332,7 @@ export const selectedProject: Project = {
     "pgvector",
     "Tailwind CSS",
   ],
-  links: [
-    { label: "Try the career chat", href: "#ask" },
-    { label: "Try the JD-fit analyzer", href: "#jd-fit" },
-  ],
+  links: [{ label: "Try the JD-fit analyzer", href: "#jd-fit" }],
 };
 
 export const education: Education[] = [

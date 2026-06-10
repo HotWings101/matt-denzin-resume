@@ -109,7 +109,7 @@ export function ContactForm() {
   return (
     <Section
       id="contact"
-      index="06"
+      index="07"
       eyebrow="Contact"
       title="Let's talk about your AI product team."
       textureSrc="/textures/contact-bg.jpg"

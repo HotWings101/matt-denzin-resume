@@ -1,7 +1,9 @@
 import { SiteNav } from "@/components/site/site-nav";
 import { personJsonLd } from "@/lib/json-ld";
 import { Hero } from "@/components/site/hero";
+import { EthosSection } from "@/components/site/ethos";
 import { ExperienceTimeline } from "@/components/site/experience-timeline";
+import { SelectedProjectSection } from "@/components/site/selected-project";
 import { EducationSection } from "@/components/site/education";
 import { Skills } from "@/components/site/skills";
 import { JdAnalyzer } from "@/components/site/jd-analyzer";
@@ -24,8 +26,10 @@ export default function Home() {
       <SiteNav />
       <main id="main" className="flex-1">
         <Hero />
+        <EthosSection />
         <JdAnalyzer />
         <ExperienceTimeline />
+        <SelectedProjectSection />
         <Recommendations />
         <EducationSection />
         <Skills />

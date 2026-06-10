@@ -5,10 +5,11 @@ import { EthosSection } from "@/components/site/ethos";
 import { ExperienceTimeline } from "@/components/site/experience-timeline";
 import { SelectedProjectSection } from "@/components/site/selected-project";
 import { EducationSection } from "@/components/site/education";
-import { Skills } from "@/components/site/skills";
+import { CapabilitiesTeaser } from "@/components/site/skills";
 import { JdAnalyzer } from "@/components/site/jd-analyzer";
 import { Recommendations } from "@/components/site/recommendations";
 import { ContactForm } from "@/components/site/contact-form";
+import { AlamoBanner } from "@/components/site/alamo-banner";
 import { SiteFooter } from "@/components/site/site-footer";
 
 const siteUrl =
@@ -32,7 +33,8 @@ export default function Home() {
         <SelectedProjectSection />
         <Recommendations />
         <EducationSection />
-        <Skills />
+        <CapabilitiesTeaser />
+        <AlamoBanner />
         <ContactForm />
       </main>
       <SiteFooter />

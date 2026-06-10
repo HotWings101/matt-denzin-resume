@@ -17,3 +17,28 @@ export function LinkedinIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+/**
+ * Texas state flag — small full-color glyph for the "handcrafted in Texas"
+ * colophon. Fixed flag colors (not currentColor). Size via className.
+ */
+export function TexasFlagIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 36 24"
+      aria-hidden="true"
+      className={className}
+      {...props}
+    >
+      {/* white field (top-right), red stripe (bottom-right), blue hoist band */}
+      <rect width="36" height="24" fill="#fff" />
+      <rect x="12" y="12" width="24" height="12" fill="#BF0A30" />
+      <rect width="12" height="24" fill="#002868" />
+      {/* lone star */}
+      <polygon
+        fill="#fff"
+        points="6,8 6.9,10.76 9.8,10.76 7.45,12.47 8.35,15.24 6,13.53 3.65,15.24 4.55,12.47 2.2,10.76 5.1,10.76"
+      />
+    </svg>
+  );
+}

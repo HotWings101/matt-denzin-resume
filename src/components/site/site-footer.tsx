@@ -1,21 +1,22 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { profile } from "@/data/resume";
-import { LinkedinIcon } from "@/components/ui/icons";
+import { LinkedinIcon, TexasFlagIcon } from "@/components/ui/icons";
 
 interface FooterLink {
   href: string;
   label: string;
 }
 
-// Mirror the nav vocabulary and page order (Fit Analyzer → … → Contact).
+// Absolute (`/#…`) so they resolve from internal pages too; Capabilities now
+// links to its dedicated page. Mirrors the nav vocabulary and page order.
 const quickLinks: FooterLink[] = [
-  { href: "#jd-fit", label: "Fit Analyzer" },
-  { href: "#experience", label: "Experience" },
-  { href: "#recommendations", label: "Endorsements" },
-  { href: "#education", label: "Education" },
-  { href: "#skills", label: "Capabilities" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#jd-fit", label: "Fit Analyzer" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#recommendations", label: "Endorsements" },
+  { href: "/#education", label: "Education" },
+  { href: "/capabilities", label: "Capabilities" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 /**
@@ -38,6 +39,14 @@ export function SiteFooter() {
             <p className="mt-3 max-w-xs text-pretty text-sm leading-relaxed text-muted">
               AI-first Product &amp; Operations Leader — {profile.location}
             </p>
+
+            {/* Handcrafted-in-Texas colophon */}
+            <div className="mt-5 flex items-center gap-2">
+              <TexasFlagIcon className="h-4 w-auto shrink-0 rounded-[2px] opacity-90 ring-1 ring-black/10" />
+              <span className="max-w-[15rem] text-pretty font-mono text-[0.68rem] leading-snug text-faint">
+                This website was handcrafted and designed in the state of Texas.
+              </span>
+            </div>
           </div>
 
           {/* Quick links */}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { usePathname } from "next/navigation";
 import { profile } from "@/data/resume";
 import { cn } from "@/lib/utils";
 
@@ -11,19 +12,24 @@ interface NavLink {
   label: string;
 }
 
+// Absolute (`/#…`) so they resolve from internal pages too, not just home.
 const links: NavLink[] = [
-  { href: "#jd-fit", label: "Fit Analyzer" },
-  { href: "#experience", label: "Experience" },
-  { href: "#recommendations", label: "Endorsements" },
-  { href: "#education", label: "Education" },
-  { href: "#skills", label: "Capabilities" },
+  { href: "/#jd-fit", label: "Fit Analyzer" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#recommendations", label: "Endorsements" },
+  { href: "/#education", label: "Education" },
+  { href: "/#skills", label: "Capabilities" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function SiteNav() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  // Internal pages have no dark hero behind the nav, so render it solid there.
+  const solid = scrolled || open || pathname !== "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -47,7 +53,7 @@ export function SiteNav() {
       aria-label="Primary"
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        scrolled || open
+        solid
           ? "border-b border-border bg-surface/80 backdrop-blur-md"
           : "border-b border-transparent bg-transparent",
       )}
@@ -55,14 +61,14 @@ export function SiteNav() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
         {/* Brand */}
         <a
-          href="#top"
+          href="/#top"
           onClick={() => setOpen(false)}
           className="group flex items-center gap-2.5 rounded-full"
         >
           <span
             className={cn(
               "font-display text-lg font-medium tracking-tight transition-colors group-hover:text-accent",
-              scrolled || open ? "text-foreground" : "text-white",
+              solid ? "text-foreground" : "text-white",
             )}
           >
             {profile.name}
@@ -77,7 +83,7 @@ export function SiteNav() {
               href={link.href}
               className={cn(
                 "rounded-full px-3 py-2 text-sm font-medium transition-colors",
-                scrolled
+                solid
                   ? "text-muted hover:text-foreground"
                   : "text-white/80 hover:text-white",
               )}
@@ -86,7 +92,7 @@ export function SiteNav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             className="ml-2 inline-flex h-9 items-center rounded-full bg-accent px-5 text-sm font-medium text-accent-foreground shadow-[0_8px_24px_-12px_rgba(79,70,229,0.6)] transition-all hover:bg-accent-strong active:scale-[0.98]"
           >
             Get in touch
@@ -129,7 +135,7 @@ export function SiteNav() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setOpen(false)}
                 className="mt-1 inline-flex h-11 items-center justify-center rounded-xl bg-accent px-5 text-base font-medium text-accent-foreground transition-colors hover:bg-accent-strong"
               >

@@ -28,7 +28,7 @@ export function EducationSection() {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {education.map((e, i) => (
           <Reveal key={e.school} delay={i * 0.06}>
-            <article className="card-paper flex h-full flex-col gap-5 rounded-2xl p-6">
+            <article className="card-paper card-paper-hover flex h-full flex-col gap-5 rounded-2xl p-6">
               <div className="flex items-center gap-4">
                 {e.logo && <LogoChip src={e.logo} alt={`${e.school} logo`} />}
                 <div className="min-w-0">
@@ -61,7 +61,7 @@ export function EducationSection() {
 
         {certifications.map((c, i) => (
           <Reveal key={c.name} delay={(education.length + i) * 0.06}>
-            <article className="card-paper flex h-full flex-col gap-5 rounded-2xl p-6">
+            <article className="card-paper card-paper-hover flex h-full flex-col gap-5 rounded-2xl p-6">
               <div className="flex items-center gap-4">
                 {c.logo && <LogoChip src={c.logo} alt={`${c.issuer} logo`} />}
                 <div className="min-w-0">

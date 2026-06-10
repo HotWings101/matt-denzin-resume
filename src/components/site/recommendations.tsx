@@ -19,7 +19,7 @@ export function Recommendations() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {recommendations.map((rec, i) => (
           <Reveal key={rec.name} delay={i * 0.08} className="h-full">
-            <figure className="card-paper relative flex h-full flex-col rounded-2xl p-7">
+            <figure className="card-paper card-paper-hover relative flex h-full flex-col rounded-2xl p-7">
               <span
                 aria-hidden
                 className="font-display pointer-events-none absolute right-5 top-2 select-none text-7xl leading-none text-accent/15"

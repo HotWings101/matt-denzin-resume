@@ -20,7 +20,7 @@ export function Skills() {
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {competencies.map((group, i) => (
           <Reveal key={group.label} delay={i * 0.06}>
-            <article className="card-paper flex h-full flex-col gap-5 rounded-2xl p-6">
+            <article className="card-paper card-paper-hover flex h-full flex-col gap-5 rounded-2xl p-6">
               <header className="flex items-center gap-3.5">
                 {group.icon ? (
                   <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-border bg-background">

@@ -8,11 +8,13 @@ interface FooterLink {
   label: string;
 }
 
+// Mirror the nav vocabulary and page order (Fit Analyzer → … → Contact).
 const quickLinks: FooterLink[] = [
+  { href: "#jd-fit", label: "Fit Analyzer" },
   { href: "#experience", label: "Experience" },
-  { href: "#skills", label: "Skills" },
-  { href: "#jd-fit", label: "JD Fit" },
-  { href: "#recommendations", label: "Recommendations" },
+  { href: "#recommendations", label: "Endorsements" },
+  { href: "#education", label: "Education" },
+  { href: "#skills", label: "Capabilities" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -90,7 +92,13 @@ export function SiteFooter() {
             &copy; {year} {profile.name}
           </p>
           <p className="text-faint/90">
-            Built as an AI-native product · Next.js · Supabase · Vercel AI SDK
+            <a
+              href="#experience"
+              className="underline decoration-faint/30 underline-offset-2 transition-colors hover:text-accent hover:decoration-accent"
+            >
+              Built as an AI-native product
+            </a>{" "}
+            · Next.js · Supabase · Vercel AI SDK
           </p>
         </div>
       </div>

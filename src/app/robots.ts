@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const base =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://matt-denzin-resume.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://matthewdenzin.ai";
 
 /** Welcomes general + AI/LLM crawlers; keeps /admin and /api private. */
 export default function robots(): MetadataRoute.Robots {

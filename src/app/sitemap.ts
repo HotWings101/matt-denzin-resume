@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const base =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://matt-denzin-resume.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://matthewdenzin.ai";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

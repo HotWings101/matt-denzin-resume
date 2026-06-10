@@ -10,7 +10,7 @@ import { ContactForm } from "@/components/site/contact-form";
 import { SiteFooter } from "@/components/site/site-footer";
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://matt-denzin-resume.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://matthewdenzin.ai";
 
 export default function Home() {
   return (

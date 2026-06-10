@@ -44,8 +44,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og.jpg",
-        width: 1376,
-        height: 768,
+        width: 1200,
+        height: 630,
         alt: `${profile.name} — ${profile.roles.join(" · ")}`,
       },
     ],

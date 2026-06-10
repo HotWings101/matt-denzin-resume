@@ -13,7 +13,7 @@ export function Hero() {
           alt="The Alamo at dusk beneath a warm Texas sunset and a futuristic constellation data-grid sky, with the San Antonio skyline in the distance"
           fetchPriority="high"
           // Mobile (portrait) crops to the Alamo on the right; desktop keeps the full centered frame.
-          className="absolute inset-0 h-full w-full object-cover object-[90%_center] md:object-center"
+          className="absolute inset-0 h-full w-full object-cover object-[85%_center] md:object-center"
         />
         {/* Scrims for text legibility */}
         <div

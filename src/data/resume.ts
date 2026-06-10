@@ -171,19 +171,19 @@ export const experience: Company[] = [
       {
         title: "Product Operations Manager – Managed Services",
         start: "May 2021",
-        end: "Present",
-        current: true,
+        end: "April 2026",
+        current: false,
         summary:
           "Product Manager for WOMS (Work Operations Management System), an enterprise Power Platform product, owning the full product lifecycle from vision and roadmap through release and adoption.",
         highlights: [
-          "Serve as Product Manager for WOMS, owning the full product lifecycle from vision and roadmap through release and adoption across multiple business units.",
-          "Lead customer discovery through user interviews, workflow analysis, and cross-business-unit sessions to identify unmet needs, validate assumptions, and prioritize high-impact product opportunities.",
-          "Translate stakeholder input into structured product requirements — epics, features, user stories, and acceptance criteria — serving as the bridge between business teams and engineering.",
-          "Own sprint planning, backlog refinement, and iteration structuring, maintaining a sequenced backlog aligned to roadmap milestones and release targets.",
-          "Design and execute QA test scenarios; lead UAT cycles, coordinate tester assignments, capture defects, and validate release readiness before production deployment.",
-          "Build KPI frameworks tracking cycle time, rework volume, and throughput; use performance data to drive roadmap prioritization and continuous product improvement.",
+          "Served as Product Manager for WOMS, owning the full product lifecycle from vision and roadmap through release and adoption across multiple business units.",
+          "Led customer discovery through user interviews, workflow analysis, and cross-business-unit sessions to identify unmet needs, validate assumptions, and prioritize high-impact product opportunities.",
+          "Translated stakeholder input into structured product requirements — epics, features, user stories, and acceptance criteria — serving as the bridge between business teams and engineering.",
+          "Owned sprint planning, backlog refinement, and iteration structuring, maintaining a sequenced backlog aligned to roadmap milestones and release targets.",
+          "Designed and executed QA test scenarios; led UAT cycles, coordinated tester assignments, captured defects, and validated release readiness before production deployment.",
+          "Built KPI frameworks tracking cycle time, rework volume, and throughput; used performance data to drive roadmap prioritization and continuous product improvement.",
           "Standardized onboarding, training, and adoption workflows across SEO, HomeNet, AMP, and Autotrader business units, driving consistent platform engagement across the organization.",
-          "Leverage Power Platform (Model-Driven Apps, Dataverse, Power Automate) and Salesforce Lightning to automate workflows, reduce manual effort, and increase operational throughput.",
+          "Leveraged Power Platform (Model-Driven Apps, Dataverse, Power Automate) and Salesforce Lightning to automate workflows, reduce manual effort, and increase operational throughput.",
         ],
         skills: [
           "Product Management",

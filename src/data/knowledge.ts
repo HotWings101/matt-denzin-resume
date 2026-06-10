@@ -38,11 +38,11 @@ export const knowledge: KnowledgePassage[] = [
   },
   {
     id: "woms-product",
-    topic: "WOMS — the product he owns at Cox",
+    topic: "WOMS — the product he owned at Cox",
     source: "Cox Automotive · Product Operations Manager",
     content:
-      "At Cox Automotive (May 2021–present) Matt is the Product Manager for WOMS, the Work Operations Management System — an enterprise product built on the Microsoft Power Platform. He owns the full product lifecycle: vision and roadmap, discovery, requirements, build, release, and adoption. He runs user interviews and workflow analysis across business units to find unmet needs, then translates them into epics, features, user stories, and acceptance criteria. He owns sprint planning and backlog refinement, designs QA test scenarios, leads UAT cycles, and validates release readiness before production. He standardized onboarding, training, and adoption across the SEO, HomeNet, AMP, and Autotrader business units to drive consistent platform engagement.",
-    tags: ["cox", "woms", "power platform", "product lifecycle", "current role"],
+      "At Cox Automotive (May 2021–April 2026) Matt was the Product Manager for WOMS, the Work Operations Management System — an enterprise product built on the Microsoft Power Platform. He owned the full product lifecycle: vision and roadmap, discovery, requirements, build, release, and adoption. He ran user interviews and workflow analysis across business units to find unmet needs, then translated them into epics, features, user stories, and acceptance criteria. He owned sprint planning and backlog refinement, designed QA test scenarios, led UAT cycles, and validated release readiness before production. He standardized onboarding, training, and adoption across the SEO, HomeNet, AMP, and Autotrader business units to drive consistent platform engagement.",
+    tags: ["cox", "woms", "power platform", "product lifecycle"],
   },
   {
     id: "oem-programs",

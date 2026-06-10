@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { profile } from "@/data/resume";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface NavLink {
@@ -66,11 +65,8 @@ export function SiteNav() {
               scrolled || open ? "text-foreground" : "text-white",
             )}
           >
-            {profile.shortName}
+            {profile.name}
           </span>
-          <Badge variant="mono" className="px-2 py-0.5">
-            {profile.suffix}
-          </Badge>
         </a>
 
         {/* Desktop links */}

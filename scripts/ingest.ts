@@ -57,7 +57,7 @@ function buildChunks(): Chunk[] {
         chunk_id: `role_${slug(company.name)}_${slug(pos.title)}`,
         topic: `${pos.title} at ${company.name}`,
         source: `${company.name} · ${pos.start}–${pos.end}`,
-        content: `${pos.title} at ${company.name} (${pos.start}–${pos.end}). ${pos.summary} ${pos.highlights.join(" ")}`,
+        content: `${pos.title} at ${company.name} (${pos.start}–${pos.end}). ${pos.summary}${pos.result ? ` Key result: ${pos.result}` : ""} ${pos.highlights.join(" ")}`,
         tags: pos.skills ?? [],
       });
     }

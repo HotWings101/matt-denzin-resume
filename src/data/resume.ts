@@ -14,6 +14,12 @@ export interface Position {
   end: string; // e.g. "Present"
   current?: boolean;
   summary: string;
+  /**
+   * One outcome-forward headline result for the role. Rendered above the
+   * highlights on the homepage timeline; the full `highlights` list lives on
+   * the /experience detail page (and feeds the RAG knowledge base).
+   */
+  result?: string;
   highlights: string[];
   skills?: string[];
 }
@@ -175,15 +181,17 @@ export const experience: Company[] = [
         current: false,
         summary:
           "Product Manager for WOMS (Work Operations Management System), an enterprise Power Platform product, owning the full product lifecycle from vision and roadmap through release and adoption.",
+        result:
+          "As Product Manager for WOMS — a custom-built CRM serving 200 fulfillment users — drove a 25% increase in monthly Managed Services client deliverable output (SEO, website creative, copywriting, and landing pages) across the digital marketing organization.",
         highlights: [
-          "Served as Product Manager for WOMS, owning the full product lifecycle from vision and roadmap through release and adoption across multiple business units.",
-          "Led customer discovery through user interviews, workflow analysis, and cross-business-unit sessions to identify unmet needs, validate assumptions, and prioritize high-impact product opportunities.",
+          "Owned the full WOMS product lifecycle — vision, roadmap, discovery, requirements, release, and adoption — across multiple business units.",
+          "Stood up the KPI framework (cycle time, rework volume, throughput) that drove roadmap prioritization and the measured gains in deliverable output.",
+          "Automated fulfillment workflows with the Power Platform (model-driven apps, Dataverse, Power Automate) and Salesforce Lightning, cutting manual effort and lifting throughput.",
+          "Led customer discovery through user interviews, workflow analysis, and cross-business-unit sessions to validate assumptions and prioritize high-impact product opportunities.",
           "Translated stakeholder input into structured product requirements — epics, features, user stories, and acceptance criteria — serving as the bridge between business teams and engineering.",
           "Owned sprint planning, backlog refinement, and iteration structuring, maintaining a sequenced backlog aligned to roadmap milestones and release targets.",
           "Designed and executed QA test scenarios; led UAT cycles, coordinated tester assignments, captured defects, and validated release readiness before production deployment.",
-          "Built KPI frameworks tracking cycle time, rework volume, and throughput; used performance data to drive roadmap prioritization and continuous product improvement.",
           "Standardized onboarding, training, and adoption workflows across SEO, HomeNet, AMP, and Autotrader business units, driving consistent platform engagement across the organization.",
-          "Leveraged Power Platform (Model-Driven Apps, Dataverse, Power Automate) and Salesforce Lightning to automate workflows, reduce manual effort, and increase operational throughput.",
         ],
         skills: [
           "Product Management",
@@ -202,13 +210,15 @@ export const experience: Company[] = [
         end: "May 2021",
         summary:
           "Led enterprise OEM website programs across multiple global automotive brands, managing the full lifecycle for platform upgrades, rebranding, and workflow automation.",
+        result:
+          "Created repeatable “fast-track” processes that compressed delivery timelines across 8 OEM brands, consistently landing programs ahead of schedule and under budget while controlling scope and risk.",
         highlights: [
-          "Led enterprise OEM website programs across multiple global automotive brands, including Audi, Ford, Lincoln, Genesis, Hyundai, Toyota, Lexus, and Honda.",
+          "Engineered “fast-track” delivery processes that compressed cycle time and let programs ship ahead of schedule.",
+          "Owned scope, schedule, and budget across 8 global OEM brands — Audi, Ford, Lincoln, Genesis, Hyundai, Toyota, Lexus, and Honda — building WBS, baselines, and risk strategies that kept projects under budget.",
           "Managed the full project lifecycle for platform upgrades, rebranding, product add-ons, and workflow automation.",
-          "Controlled scope, schedule, and budget while developing WBS, baselines, risk strategies, and technical implementation plans.",
           "Forecasted implementation output, team capacity, and KPI performance to support portfolio-level planning.",
           "Delivered consistent stakeholder communication through work performance reports, stand-ups, portfolio reviews, and automated reporting.",
-          "Contributed to PMO governance by standardizing processes, templates, and lessons-learned to reduce future project costs.",
+          "Hardened PMO governance with standardized processes, templates, and lessons-learned that lowered the cost of future programs.",
         ],
         skills: [
           "Program Management",
@@ -234,6 +244,8 @@ export const experience: Company[] = [
         end: "Feb 2017",
         summary:
           "Led a team of Implementation Project Managers delivering Ford Motor Company websites, owning production workflow and on-time delivery.",
+        result:
+          "Led a team of Implementation Project Managers to reliable, on-time delivery of Ford Motor Company websites at production scale.",
         highlights: [
           "Led a team of Implementation Project Managers delivering Ford Motor Company websites.",
           "Managed production workflow, delegated builds, and ensured on-time delivery of high-quality sites.",
@@ -254,11 +266,13 @@ export const experience: Company[] = [
         end: "Nov 2014",
         summary:
           "Directed creative and technical onboarding for new dealership clients, from branding strategy through hands-on implementation.",
+        result:
+          "Turned new-client onboarding into hands-on delivery — building branded, brand-compliant dealership websites directly in HTML, CSS, and JavaScript.",
         highlights: [
           "Directed creative and technical onboarding for new dealership clients; developed branding strategies, creative briefs, and website mockups.",
-          "Managed revisions, asset collection, deadlines, and cross-department coordination.",
-          "Performed QA, proofreading, and content validation; implemented assets using HTML, CSS, and JavaScript.",
+          "Implemented assets hands-on using HTML, CSS, and JavaScript; performed QA, proofreading, and content validation.",
           "Advised clients on SEO/SEM opportunities and ensured compliance with Ford/Lincoln brand standards.",
+          "Managed revisions, asset collection, deadlines, and cross-department coordination.",
         ],
         skills: [
           "Branding Strategy",
@@ -283,6 +297,8 @@ export const experience: Company[] = [
         end: "May 2012",
         summary:
           "Supported 250+ Toyota dealership websites under the Enterprise Toyota GSM Program, leading escalation, training, and release coordination.",
+        result:
+          "Sustained release and support operations across 250+ Toyota dealership websites under the Enterprise Toyota GSM Program.",
         highlights: [
           "Supported 250+ Toyota dealership websites under the Enterprise Toyota GSM Program.",
           "Led daily escalation and training calls with GSM support teams; conducted monthly performance reviews with MAG/VIP dealers.",

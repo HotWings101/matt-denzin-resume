@@ -6,6 +6,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/** Turn a label into a URL/anchor-safe slug (e.g. "Dealertrack / Dealer.com" → "dealertrack-dealer-com"). */
+export function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 /** Stable-ish anonymous visitor id stored in localStorage (client only). */
 export function getVisitorId(): string {
   if (typeof window === "undefined") return "server";

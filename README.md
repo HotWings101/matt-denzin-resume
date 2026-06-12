@@ -28,6 +28,7 @@ product with Matt as the subject.
 - `src/data/resume.ts` — single source of truth for the UI **and** the AI knowledge base.
 - `src/data/knowledge.ts` — curated, retrieval-friendly passages.
 - `scripts/ingest.ts` — embeds the corpus into `resume_chunks` (`npm run ingest`).
+- `scripts/gen-resume.tsx` — renders a 2-page PDF résumé from `resume.ts` (`npm run resume`).
 - `src/app/api/*` — chat (streaming RAG), jd-fit (structured output), track, contact.
 - `supabase/migrations/0001_init.sql` — schema, pgvector search fn, RLS.
 - Security: the browser never queries Supabase directly. All writes/admin reads use the
@@ -46,6 +47,17 @@ To populate the RAG corpus after Supabase is set up:
 
 ```bash
 npm run ingest
+```
+
+### Résumé PDF
+
+The downloadable PDF (`public/Matthew-Denzin-Resume.pdf`, linked from the site header) is
+generated from `src/data/resume.ts` — the same source of truth as the site. After editing
+résumé content, regenerate it and commit the updated file (it's a static asset, so it does
+**not** rebuild automatically on deploy):
+
+```bash
+npm run resume
 ```
 
 ## Environment

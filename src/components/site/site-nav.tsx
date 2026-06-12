@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { profile } from "@/data/resume";
@@ -92,6 +92,20 @@ export function SiteNav() {
             </a>
           ))}
           <a
+            href="/Matthew-Denzin-Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-colors",
+              solid
+                ? "text-muted hover:text-foreground"
+                : "text-white/80 hover:text-white",
+            )}
+          >
+            <FileText className="size-3.5" />
+            Résumé
+          </a>
+          <a
             href="/#contact"
             className="ml-2 inline-flex h-9 items-center rounded-full bg-accent px-5 text-sm font-medium text-accent-foreground shadow-[0_8px_24px_-12px_rgba(79,70,229,0.6)] transition-all hover:bg-accent-strong active:scale-[0.98]"
           >
@@ -134,6 +148,16 @@ export function SiteNav() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href="/Matthew-Denzin-Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-surface-2 hover:text-accent"
+              >
+                <FileText className="size-4" />
+                Résumé (PDF)
+              </a>
               <a
                 href="/#contact"
                 onClick={() => setOpen(false)}

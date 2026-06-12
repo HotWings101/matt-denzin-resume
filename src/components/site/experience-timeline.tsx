@@ -63,9 +63,11 @@ function PositionEntry({
         </p>
       )}
 
-      <p className="mt-3 max-w-2xl text-pretty leading-relaxed text-foreground/80">
-        {position.summary}
-      </p>
+      {position.summary && (
+        <p className="mt-3 max-w-2xl text-pretty leading-relaxed text-foreground/80">
+          {position.summary}
+        </p>
+      )}
 
       {/* Highlights — accent dot bullets */}
       <ul className="mt-4 space-y-2">

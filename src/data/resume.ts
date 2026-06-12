@@ -13,7 +13,7 @@ export interface Position {
   start: string; // e.g. "May 2021"
   end: string; // e.g. "Present"
   current?: boolean;
-  summary: string;
+  summary?: string;
   /**
    * One outcome-forward headline result for the role. Rendered above the
    * highlights on the homepage timeline; the full `highlights` list lives on
@@ -179,8 +179,6 @@ export const experience: Company[] = [
         start: "May 2021",
         end: "April 2026",
         current: false,
-        summary:
-          "Product Manager for WOMS (Work Operations Management System), an enterprise Power Platform product, owning the full product lifecycle from vision and roadmap through release and adoption.",
         result:
           "As Product Manager for WOMS — a custom-built CRM serving 200 fulfillment users — drove a 25% increase in monthly Managed Services client deliverable output (SEO, website creative, copywriting, and landing pages) across the digital marketing organization.",
         highlights: [
@@ -208,8 +206,6 @@ export const experience: Company[] = [
         title: "Sr. Technical Project Manager – OEM",
         start: "Mar 2017",
         end: "May 2021",
-        summary:
-          "Led enterprise OEM website programs across multiple global automotive brands, managing the full lifecycle for platform upgrades, rebranding, and workflow automation.",
         result:
           "Created repeatable “fast-track” processes that compressed delivery timelines across 8 OEM brands, consistently landing programs ahead of schedule and under budget while controlling scope and risk.",
         highlights: [
@@ -242,8 +238,6 @@ export const experience: Company[] = [
         title: "Sr. Production Project Manager",
         start: "Nov 2014",
         end: "Feb 2017",
-        summary:
-          "Led a team of Implementation Project Managers delivering Ford Motor Company websites, owning production workflow and on-time delivery.",
         result:
           "Led a team of Implementation Project Managers to reliable, on-time delivery of Ford Motor Company websites at production scale.",
         highlights: [
@@ -264,10 +258,8 @@ export const experience: Company[] = [
         title: "Sr. Branding Specialist",
         start: "May 2012",
         end: "Nov 2014",
-        summary:
-          "Directed creative and technical onboarding for new dealership clients, from branding strategy through hands-on implementation.",
         result:
-          "Turned new-client onboarding into hands-on delivery — building branded, brand-compliant dealership websites directly in HTML, CSS, and JavaScript.",
+          "Directed creative and technical onboarding for new dealership clients, from branding strategy through hands-on implementation.",
         highlights: [
           "Directed creative and technical onboarding for new dealership clients; developed branding strategies, creative briefs, and website mockups.",
           "Implemented assets hands-on using HTML, CSS, and JavaScript; performed QA, proofreading, and content validation.",
@@ -295,8 +287,6 @@ export const experience: Company[] = [
         title: "Digital Advisor / Account Executive",
         start: "May 2010",
         end: "May 2012",
-        summary:
-          "Supported 250+ Toyota dealership websites under the Enterprise Toyota GSM Program, leading escalation, training, and release coordination.",
         result:
           "Sustained release and support operations across 250+ Toyota dealership websites under the Enterprise Toyota GSM Program.",
         highlights: [

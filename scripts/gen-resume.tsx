@@ -5,7 +5,7 @@
  *
  * Single source of truth: edit src/data/resume.ts, re-run this, and the PDF
  * stays in sync with the website. Built with @react-pdf/renderer (pure Node,
- * real selectable text → ATS-friendly).
+ * real selectable text → ATS-friendly). Palette matches the warm clay branding.
  */
 import React from "react";
 import {
@@ -17,10 +17,12 @@ import {
   StyleSheet,
   renderToFile,
 } from "@react-pdf/renderer";
+import type { Position } from "../src/data/resume";
 import {
   profile,
   competencies,
   experience,
+  selectedProject,
   education,
   certifications,
 } from "../src/data/resume";
@@ -30,85 +32,95 @@ const e = React.createElement;
 const SITE_URL = "https://matthewdenzin.ai";
 const SITE_LABEL = "matthewdenzin.ai";
 
-// Top highlights shown per role on the PDF (full detail lives on the site).
-const PDF_HIGHLIGHTS = 3;
+// Max bullets shown per role on the PDF (result + highlights). Full detail
+// lives on the site. Tuned to fill two full pages.
+const MAX_BULLETS = 5;
+// A highlight whose significant words overlap the result above this fraction is
+// dropped as redundant (the reframed lead highlights restate the result).
+const REDUNDANCY_THRESHOLD = 0.5;
 
-const ink = "#1b1813";
-const muted = "#5c5648";
-const accent = "#4f46e5";
-const clay = "#a8481a";
-const border = "#e0dbcd";
+// Warm clay branding (extracted from the reference résumé).
+const ink = "#2a2118";
+const muted = "#7a6c58";
+const accent = "#b5532a";
+const accentDark = "#8a3c1c";
+const border = "#ddcfb8";
 
 const s = StyleSheet.create({
   page: {
-    paddingTop: 38,
-    paddingBottom: 34,
-    paddingHorizontal: 44,
+    paddingTop: 40,
+    paddingBottom: 36,
+    paddingHorizontal: 48,
     fontFamily: "Helvetica",
     fontSize: 9.3,
-    lineHeight: 1.4,
+    lineHeight: 1.32,
     color: ink,
   },
   // Header
   name: { fontFamily: "Times-Roman", fontSize: 23, lineHeight: 1.1, color: ink, marginBottom: 2 },
   suffix: { fontFamily: "Times-Roman", fontSize: 12, color: accent },
-  roles: { fontSize: 9.5, color: accent, marginTop: 3, letterSpacing: 0.3 },
-  contact: { fontSize: 8.6, color: muted, marginTop: 5 },
+  roles: { fontSize: 9.6, color: accent, marginTop: 3, letterSpacing: 0.4 },
+  contact: { fontSize: 8.5, color: muted, marginTop: 5 },
   contactLink: { color: accent, textDecoration: "none" },
   sep: { color: border },
-  rule: { borderBottomWidth: 1.4, borderBottomColor: accent, marginTop: 9, marginBottom: 2 },
+  rule: { borderBottomWidth: 1.5, borderBottomColor: accentDark, marginTop: 9, marginBottom: 2 },
   // Sections
   sectionTitle: {
     fontFamily: "Helvetica-Bold",
-    fontSize: 9.5,
+    fontSize: 9.6,
     color: accent,
-    letterSpacing: 1.1,
+    letterSpacing: 1.2,
     textTransform: "uppercase",
-    marginTop: 14,
-    marginBottom: 6,
-    borderBottomWidth: 0.6,
+    marginTop: 10,
+    marginBottom: 5,
+    borderBottomWidth: 0.8,
     borderBottomColor: border,
     paddingBottom: 3,
   },
   summary: { fontSize: 9.3, color: ink, marginTop: 1 },
   // Competencies
-  compRow: { marginBottom: 2.5 },
+  compRow: { marginBottom: 2.3 },
   compLabel: { fontFamily: "Helvetica-Bold", color: ink },
   compItems: { color: muted },
   // Experience
-  company: { marginTop: 9 },
-  companyName: { fontFamily: "Helvetica-Bold", fontSize: 10.5, color: ink },
+  company: { marginTop: 7.5 },
+  companyName: { fontFamily: "Helvetica-Bold", fontSize: 10.6, color: ink },
   companyMeta: { fontSize: 8.4, color: muted, marginTop: 1 },
   posHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 6,
+    marginTop: 5,
   },
-  posTitle: { fontFamily: "Helvetica-Bold", fontSize: 9.6, color: ink },
+  posTitle: { fontFamily: "Helvetica-Bold", fontSize: 9.7, color: accentDark },
   posDates: { fontSize: 8.4, color: muted },
-  result: {
-    flexDirection: "row",
-    marginTop: 3,
-    marginBottom: 1,
-  },
-  resultLabel: {
-    fontFamily: "Helvetica-Bold",
-    fontSize: 7.6,
-    color: accent,
-    letterSpacing: 0.6,
-    marginRight: 5,
-    marginTop: 1.4,
-  },
-  resultText: { flex: 1, fontFamily: "Helvetica-Oblique", fontSize: 9.2, color: ink },
-  bulletRow: { flexDirection: "row", marginTop: 2.5, paddingLeft: 2 },
-  bulletDot: { color: accent, marginRight: 5 },
+  bulletRow: { flexDirection: "row", marginTop: 2.4, paddingLeft: 2 },
+  bulletDot: { color: accent, marginRight: 6 },
   bulletText: { flex: 1, color: ink },
   // Education / cert two-col
   twoCol: { flexDirection: "row", justifyContent: "space-between" },
   col: { width: "48%" },
-  eduLine: { fontFamily: "Helvetica-Bold", fontSize: 9.4, color: ink },
+  eduLine: { fontFamily: "Helvetica-Bold", fontSize: 9.5, color: ink },
   eduMeta: { fontSize: 8.7, color: muted, marginTop: 1 },
 });
+
+/** Significant (length > 3) lowercased word set, for redundancy comparison. */
+function sigWords(str: string): Set<string> {
+  return new Set((str.toLowerCase().match(/[a-z0-9]+/g) || []).filter((w) => w.length > 3));
+}
+
+/** result (as a plain bullet) + highlights, dropping any that restate the result. */
+function bulletsFor(pos: Position): string[] {
+  const out: string[] = [];
+  if (pos.result) out.push(pos.result);
+  const resultWords = pos.result ? sigWords(pos.result) : new Set<string>();
+  for (const h of pos.highlights) {
+    if (out.length >= MAX_BULLETS) break;
+    const hw = [...sigWords(h)];
+    const overlap = hw.length ? hw.filter((w) => resultWords.has(w)).length / hw.length : 0;
+    if (overlap < REDUNDANCY_THRESHOLD) out.push(h);
+  }
+  return out;
+}
 
 function Bullet({ text }: { text: string }) {
   return e(
@@ -119,20 +131,16 @@ function Bullet({ text }: { text: string }) {
   );
 }
 
-function Section({ title, children }: { title: string; children?: React.ReactNode }) {
-  return e(View, { wrap: false }, e(Text, { style: s.sectionTitle }, title), children);
-}
-
 function Header() {
   const contactBits = [
     e(Text, { key: "loc" }, profile.location),
-    e(Text, { key: "s1", style: s.sep }, "  ·  "),
+    e(Text, { key: "s1", style: s.sep }, "   ·   "),
     e(Link, { key: "tel", style: s.contactLink, src: `tel:${profile.phone.replace(/[^0-9+]/g, "")}` }, profile.phone),
-    e(Text, { key: "s2", style: s.sep }, "  ·  "),
+    e(Text, { key: "s2", style: s.sep }, "   ·   "),
     e(Link, { key: "mail", style: s.contactLink, src: `mailto:${profile.email}` }, profile.email),
-    e(Text, { key: "s3", style: s.sep }, "  ·  "),
+    e(Text, { key: "s3", style: s.sep }, "   ·   "),
     e(Link, { key: "li", style: s.contactLink, src: profile.linkedin }, profile.linkedinLabel),
-    e(Text, { key: "s4", style: s.sep }, "  ·  "),
+    e(Text, { key: "s4", style: s.sep }, "   ·   "),
     e(Link, { key: "site", style: s.contactLink, src: SITE_URL }, SITE_LABEL),
   ];
 
@@ -153,8 +161,9 @@ function Header() {
 
 function Competencies() {
   return e(
-    Section,
-    { title: "Core Competencies" },
+    View,
+    { wrap: false },
+    e(Text, { style: s.sectionTitle }, "Core Competencies"),
     ...competencies.map((g) =>
       e(
         Text,
@@ -187,17 +196,7 @@ function Experience() {
               e(Text, { style: s.posTitle }, pos.title),
               e(Text, { style: s.posDates }, `${pos.start} – ${pos.end}`),
             ),
-            pos.result
-              ? e(
-                  View,
-                  { style: s.result },
-                  e(Text, { style: s.resultLabel }, "RESULT"),
-                  e(Text, { style: s.resultText }, pos.result),
-                )
-              : null,
-            ...pos.highlights
-              .slice(0, PDF_HIGHLIGHTS)
-              .map((h, i) => e(Bullet, { key: i, text: h })),
+            ...bulletsFor(pos).map((b, i) => e(Bullet, { key: i, text: b })),
           ),
         ),
       ),
@@ -205,10 +204,34 @@ function Experience() {
   );
 }
 
+function SelectedProject() {
+  const p = selectedProject;
+  return e(
+    View,
+    { wrap: false },
+    e(Text, { style: s.sectionTitle }, "Selected Project"),
+    e(
+      View,
+      { style: s.posHeader },
+      e(Text, { style: s.posTitle }, `${p.title} — ${SITE_LABEL}`),
+      e(Text, { style: s.posDates }, p.timeframe),
+    ),
+    e(Text, { style: { ...s.companyMeta, marginTop: 1 } }, p.role),
+    ...p.highlights.slice(0, 3).map((h, i) => e(Bullet, { key: i, text: h })),
+    e(
+      Text,
+      { style: { ...s.companyMeta, marginTop: 3 } },
+      e(Text, { style: { fontFamily: "Helvetica-Bold", color: ink } }, "Stack:  "),
+      p.stack.join(" · "),
+    ),
+  );
+}
+
 function EducationCert() {
   return e(
-    Section,
-    { title: "Education & Certification" },
+    View,
+    { wrap: false },
+    e(Text, { style: s.sectionTitle }, "Education & Certification"),
     e(
       View,
       { style: s.twoCol },
@@ -264,6 +287,7 @@ const Resume = e(
     ),
     e(Competencies),
     e(Experience),
+    e(SelectedProject),
     e(EducationCert),
   ),
 );

@@ -22,7 +22,6 @@ import {
   profile,
   competencies,
   experience,
-  selectedProject,
   education,
   certifications,
 } from "../src/data/resume";
@@ -48,12 +47,12 @@ const border = "#ddcfb8";
 
 const s = StyleSheet.create({
   page: {
-    paddingTop: 40,
-    paddingBottom: 36,
-    paddingHorizontal: 48,
+    paddingTop: 34,
+    paddingBottom: 30,
+    paddingHorizontal: 46,
     fontFamily: "Helvetica",
     fontSize: 9.3,
-    lineHeight: 1.32,
+    lineHeight: 1.27,
     color: ink,
   },
   // Header
@@ -71,29 +70,29 @@ const s = StyleSheet.create({
     color: accent,
     letterSpacing: 1.2,
     textTransform: "uppercase",
-    marginTop: 10,
-    marginBottom: 5,
+    marginTop: 8,
+    marginBottom: 4,
     borderBottomWidth: 0.8,
     borderBottomColor: border,
-    paddingBottom: 3,
+    paddingBottom: 2.5,
   },
   summary: { fontSize: 9.3, color: ink, marginTop: 1 },
   // Competencies
-  compRow: { marginBottom: 2.3 },
+  compRow: { marginBottom: 1.8 },
   compLabel: { fontFamily: "Helvetica-Bold", color: ink },
   compItems: { color: muted },
   // Experience
-  company: { marginTop: 7.5 },
+  company: { marginTop: 6 },
   companyName: { fontFamily: "Helvetica-Bold", fontSize: 10.6, color: ink },
   companyMeta: { fontSize: 8.4, color: muted, marginTop: 1 },
   posHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 5,
+    marginTop: 4,
   },
   posTitle: { fontFamily: "Helvetica-Bold", fontSize: 9.7, color: accentDark },
   posDates: { fontSize: 8.4, color: muted },
-  bulletRow: { flexDirection: "row", marginTop: 2.4, paddingLeft: 2 },
+  bulletRow: { flexDirection: "row", marginTop: 2, paddingLeft: 2 },
   bulletDot: { color: accent, marginRight: 6 },
   bulletText: { flex: 1, color: ink },
   // Education / cert two-col
@@ -204,29 +203,6 @@ function Experience() {
   );
 }
 
-function SelectedProject() {
-  const p = selectedProject;
-  return e(
-    View,
-    { wrap: false },
-    e(Text, { style: s.sectionTitle }, "Selected Project"),
-    e(
-      View,
-      { style: s.posHeader },
-      e(Text, { style: s.posTitle }, `${p.title} — ${SITE_LABEL}`),
-      e(Text, { style: s.posDates }, p.timeframe),
-    ),
-    e(Text, { style: { ...s.companyMeta, marginTop: 1 } }, p.role),
-    ...p.highlights.slice(0, 3).map((h, i) => e(Bullet, { key: i, text: h })),
-    e(
-      Text,
-      { style: { ...s.companyMeta, marginTop: 3 } },
-      e(Text, { style: { fontFamily: "Helvetica-Bold", color: ink } }, "Stack:  "),
-      p.stack.join(" · "),
-    ),
-  );
-}
-
 function EducationCert() {
   return e(
     View,
@@ -287,7 +263,6 @@ const Resume = e(
     ),
     e(Competencies),
     e(Experience),
-    e(SelectedProject),
     e(EducationCert),
   ),
 );

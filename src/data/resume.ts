@@ -218,7 +218,7 @@ export const experience: Company[] = [
         highlights: [
           "Engineered “fast-track” delivery processes that compressed cycle time and let programs ship ahead of schedule.",
           "Owned scope, schedule, and budget across 8 global OEM brands — Audi, Ford, Lincoln, Genesis, Hyundai, Toyota, Lexus, and Honda — building WBS, baselines, and risk strategies that kept projects under budget.",
-          "On OEM website platform migrations, partnered directly with dealers to review and adjust their vehicle pricing displays — wiring up DMS inventory feeds and OEM incentive feeds — and stood up digital retailing products on the migrated sites.",
+          "Led a team through OEM website platform migrations — partnering directly with dealers to review and adjust their vehicle pricing displays, wiring up DMS inventory feeds and OEM incentive feeds, and standing up digital retailing products on the migrated sites.",
           "Managed the full project lifecycle for platform upgrades, rebranding, product add-ons, and workflow automation.",
           "Forecasted implementation output, team capacity, and KPI performance to support portfolio-level planning.",
           "Delivered consistent stakeholder communication through work performance reports, stand-ups, portfolio reviews, and automated reporting.",

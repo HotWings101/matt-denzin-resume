@@ -133,6 +133,25 @@ export const knowledge: KnowledgePassage[] = [
     ],
   },
   {
+    id: "vehicle-pricing",
+    topic: "Vehicle pricing, inventory feeds, OEM incentives & digital retailing",
+    source: "Career highlight",
+    content:
+      "Dealer vehicle pricing has run through every role in Matt's career. He has worked closely with dealer DMS (dealer management system) feeds and OEM incentive feeds that drive the vehicle pricing displayed on dealer websites — so he understands first-hand how critical accurate, competitive pricing is to a dealer's competitiveness and inventory turn. During OEM website platform migrations he partnered directly with dealers to review and adjust their pricing displays and to stand up digital retailing products on the new sites. Most recently, in the Managed Services / local SEO service line at Cox Automotive, he led a vehicle-pricing initiative: he identified the requirements and re-engineered the dealer inventory data exports so accurate pricing flowed from the dealer feed to the DBA platform and on to Google, surfacing live dealer vehicle pricing on Google Vehicles for Sale. This is directly relevant to building an inventory-pricing product: he has owned the data feeds, the integrations, and the requirements that determine how a dealer's price reaches the consumer.",
+    tags: [
+      "vehicle pricing",
+      "inventory feeds",
+      "oem incentives",
+      "incentive feeds",
+      "dms",
+      "dms integration",
+      "digital retailing",
+      "google vehicles for sale",
+      "data feeds",
+      "pricing",
+    ],
+  },
+  {
     id: "scale-breadth",
     topic: "Scale and breadth of delivery",
     source: "Career highlight",
@@ -159,4 +178,5 @@ export const suggestedQuestions = [
   "Has Matt led teams and managed budgets?",
   "Which automotive brands has he shipped programs for?",
   "What tools and methodologies does he use?",
+  "What's his experience with vehicle pricing and inventory feeds?",
 ] as const;

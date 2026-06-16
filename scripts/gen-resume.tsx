@@ -28,6 +28,12 @@ import {
 
 const e = React.createElement;
 
+// Spacing knobs — tuned so the content fills exactly two full pages (the next
+// increment overflows onto a third). Override via RESUME_SP / RESUME_LH to retune
+// if the résumé content changes materially.
+const SP = Number(process.env.RESUME_SP) || 0.64;
+const LH = Number(process.env.RESUME_LH) || 1.27;
+
 const SITE_URL = "https://matthewdenzin.ai";
 const SITE_LABEL = "matthewdenzin.ai";
 
@@ -47,12 +53,12 @@ const border = "#ddcfb8";
 
 const s = StyleSheet.create({
   page: {
-    paddingTop: 34,
-    paddingBottom: 30,
-    paddingHorizontal: 46,
+    paddingTop: 42,
+    paddingBottom: 38,
+    paddingHorizontal: 50,
     fontFamily: "Helvetica",
-    fontSize: 9.3,
-    lineHeight: 1.27,
+    fontSize: 9.4,
+    lineHeight: LH,
     color: ink,
   },
   // Header
@@ -70,29 +76,29 @@ const s = StyleSheet.create({
     color: accent,
     letterSpacing: 1.2,
     textTransform: "uppercase",
-    marginTop: 8,
-    marginBottom: 4,
+    marginTop: 11 * SP,
+    marginBottom: 5 * SP,
     borderBottomWidth: 0.8,
     borderBottomColor: border,
-    paddingBottom: 2.5,
+    paddingBottom: 3.5,
   },
   summary: { fontSize: 9.3, color: ink, marginTop: 1 },
   // Competencies
-  compRow: { marginBottom: 1.8 },
+  compRow: { marginBottom: 2.7 * SP },
   compLabel: { fontFamily: "Helvetica-Bold", color: ink },
   compItems: { color: muted },
   // Experience
-  company: { marginTop: 6 },
+  company: { marginTop: 8.5 * SP },
   companyName: { fontFamily: "Helvetica-Bold", fontSize: 10.6, color: ink },
-  companyMeta: { fontSize: 8.4, color: muted, marginTop: 1 },
+  companyMeta: { fontSize: 8.4, color: muted, marginTop: 1.5 },
   posHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 4,
+    marginTop: 5.5 * SP,
   },
   posTitle: { fontFamily: "Helvetica-Bold", fontSize: 9.7, color: accentDark },
   posDates: { fontSize: 8.4, color: muted },
-  bulletRow: { flexDirection: "row", marginTop: 2, paddingLeft: 2 },
+  bulletRow: { flexDirection: "row", marginTop: 2.9 * SP, paddingLeft: 2 },
   bulletDot: { color: accent, marginRight: 6 },
   bulletText: { flex: 1, color: ink },
   // Education / cert two-col

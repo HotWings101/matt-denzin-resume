@@ -45,12 +45,51 @@ export const knowledge: KnowledgePassage[] = [
     tags: ["cox", "woms", "power platform", "product lifecycle"],
   },
   {
+    id: "woms-ai-delivery",
+    topic: "Using AI to run product delivery as Product Operations Manager",
+    source: "Cox Automotive · Product Operations Manager",
+    content:
+      "As Product Operations Manager at Cox Automotive, Matt used AI across the entire WOMS delivery cycle to operate leaner. He used AI to break end-user feature and enhancement requests into epics, features, and user stories, and to assign priority, ranking, and scoring across the backlog. Each sprint before release, he used AI to parse the developer change log and generate QA test scenarios, user acceptance criteria, and release notes. He produced weekly AI-generated recommendation decks for stakeholders to review and provide input — a proactive, decision-ready format they specifically valued. By applying AI this way he absorbed work that would traditionally require 3–4 dedicated roles — business analyst, product owner, QA analyst, and change management — delivering meaningful labor-cost savings. As a result the role evolved beyond a traditional Product Manager toward a Release Train Engineer-style coordination role, orchestrating delivery across the train rather than executing each function individually. This is real, applied AI-for-delivery — distinct from the AI-native side project he also shipped.",
+    tags: [
+      "ai",
+      "ai-assisted delivery",
+      "product operations",
+      "release train engineer",
+      "user stories",
+      "qa",
+      "release notes",
+      "backlog",
+      "automation",
+      "labor savings",
+    ],
+  },
+  {
     id: "oem-programs",
     topic: "Enterprise OEM website programs",
     source: "Cox Automotive · Sr. Technical Project Manager – OEM",
     content:
       "From March 2017 to May 2021 Matt was Senior Technical Project Manager for OEM programs, leading enterprise website programs across multiple global automotive brands: Audi, Ford, Lincoln, Genesis, Hyundai, Toyota, Lexus, and Honda. He managed the full project lifecycle for platform upgrades, rebranding, product add-ons, and workflow automation. He controlled scope, schedule, and budget while building work breakdown structures, baselines, risk strategies, and technical implementation plans, and forecasted implementation output, team capacity, and KPI performance for portfolio-level planning. He contributed to PMO governance by standardizing processes, templates, and lessons-learned to reduce future project costs.",
     tags: ["oem", "program management", "automotive", "budget", "risk", "pmo"],
+  },
+  {
+    id: "digital-retailing-fintech",
+    topic: "Fintech & digital retailing as Sr. Technical Project Manager",
+    source: "Cox Automotive · Sr. Technical Project Manager – OEM",
+    content:
+      "As Senior Technical Project Manager for OEM programs, Matt delivered digital-retailing initiatives that placed him squarely on the fintech side of automotive. Digital retailing moves the financing and buying experience online, so he coordinated integrations spanning OEM incentive feeds, DMS (dealer management systems), and banks/lenders — connecting dealers, customers, and financing partners through a single platform under strict accuracy and compliance requirements. During OEM website platform migrations he led a team that partnered directly with dealers to review and adjust their vehicle pricing displays, wired up DMS inventory feeds and OEM incentive feeds, and stood up digital-retailing products on the migrated sites. This means he has hands-on experience with the data, integrations, and compliance that connect a dealer's pricing and a customer's financing to the online buying flow — directly relevant to fintech and digital-retailing product roles.",
+    tags: [
+      "fintech",
+      "digital retailing",
+      "oem incentive feeds",
+      "dms",
+      "dms integration",
+      "lenders",
+      "banks",
+      "financing",
+      "compliance",
+      "vehicle pricing",
+      "integrations",
+    ],
   },
   {
     id: "team-leadership",
@@ -173,10 +212,10 @@ export const knowledge: KnowledgePassage[] = [
 
 /** Starter questions shown as chips under the hero chat input. */
 export const suggestedQuestions = [
-  "What makes Matt a fit for an AI-first product role?",
+  "How does Matt use AI to run product delivery?",
+  "What's his fintech and digital-retailing experience?",
   "Tell me about the product he owns at Cox Automotive.",
   "Has Matt led teams and managed budgets?",
   "Which automotive brands has he shipped programs for?",
-  "What tools and methodologies does he use?",
   "What's his experience with vehicle pricing and inventory feeds?",
 ] as const;

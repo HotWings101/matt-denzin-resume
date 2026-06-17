@@ -1,6 +1,8 @@
+"use client";
 /* eslint-disable @next/next/no-img-element -- small self-hosted employer logos */
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { experience } from "@/data/resume";
 import type { Position } from "@/data/resume";
 import { Badge } from "@/components/ui/badge";
@@ -8,8 +10,8 @@ import { Section } from "./section";
 import { Reveal } from "./reveal";
 import { cn, slugify } from "@/lib/utils";
 
-/** How many highlights to show before the "Full detail" link kicks in. */
-const PREVIEW_HIGHLIGHTS = 3;
+/** How many highlights to show per role before the inline "Full details" toggle. */
+const PREVIEW_HIGHLIGHTS = 4;
 
 /** A single position on a company's vertical rail. */
 function PositionEntry({
@@ -22,9 +24,16 @@ function PositionEntry({
   /** When true, render every highlight (detail page). Otherwise truncate. */
   full?: boolean;
 }) {
-  const highlights = full
-    ? position.highlights
-    : position.highlights.slice(0, PREVIEW_HIGHLIGHTS);
+  const [expanded, setExpanded] = useState(false);
+  // On the detail page (`full`) everything is always shown; on the overview we
+  // truncate each role and let the visitor expand it inline.
+  const canExpand =
+    !full && position.highlights.length > PREVIEW_HIGHLIGHTS;
+  const highlights =
+    full || expanded
+      ? position.highlights
+      : position.highlights.slice(0, PREVIEW_HIGHLIGHTS);
+  const hiddenCount = position.highlights.length - PREVIEW_HIGHLIGHTS;
 
   return (
     <Reveal delay={delay} className="relative pb-10 pl-8 last:pb-0">
@@ -82,6 +91,24 @@ function PositionEntry({
         ))}
       </ul>
 
+      {/* Inline expand/collapse for the rest of this role's highlights */}
+      {canExpand && (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="group mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-accent"
+        >
+          {expanded ? "Show less" : `Full details (${hiddenCount} more)`}
+          <ChevronDown
+            className={cn(
+              "size-3.5 transition-transform",
+              expanded && "rotate-180",
+            )}
+          />
+        </button>
+      )}
+
       {/* Skills chips */}
       {position.skills && position.skills.length > 0 && (
         <ul className="mt-5 flex flex-wrap gap-2">
@@ -104,9 +131,6 @@ export function CompanyList({ full }: { full?: boolean }) {
   return (
     <div className="space-y-16 md:space-y-20">
       {experience.map((company, companyIndex) => {
-        const hasMore = company.positions.some(
-          (p) => p.highlights.length > PREVIEW_HIGHLIGHTS,
-        );
         return (
           <Reveal key={company.name} delay={companyIndex * 0.04}>
             <article id={slugify(company.name)} className="scroll-mt-24">
@@ -146,17 +170,6 @@ export function CompanyList({ full }: { full?: boolean }) {
                   />
                 ))}
               </div>
-
-              {/* Link to the full detail for this company */}
-              {!full && hasMore && (
-                <Link
-                  href={`/experience#${slugify(company.name)}`}
-                  className="group mt-5 inline-flex items-center gap-1.5 pl-8 text-sm font-medium text-muted transition-colors hover:text-accent"
-                >
-                  Full detail
-                  <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              )}
             </article>
           </Reveal>
         );
@@ -188,6 +201,17 @@ export function ExperienceTimeline() {
       </Reveal>
 
       <CompanyList />
+
+      {/* Permalink to the always-expanded, print-friendly full work history */}
+      <Reveal>
+        <Link
+          href="/experience"
+          className="group mt-12 inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-accent"
+        >
+          See the full work history
+          <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      </Reveal>
     </Section>
   );
 }

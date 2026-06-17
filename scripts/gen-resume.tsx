@@ -31,8 +31,11 @@ const e = React.createElement;
 // Spacing knobs — tuned so the content fills exactly two full pages (the next
 // increment overflows onto a third). Override via RESUME_SP / RESUME_LH to retune
 // if the résumé content changes materially.
-const SP = Number(process.env.RESUME_SP) || 0.64;
-const LH = Number(process.env.RESUME_LH) || 1.27;
+const SP = Number(process.env.RESUME_SP) || 0.95;
+const LH = Number(process.env.RESUME_LH) || 1.32;
+// Global font scale. Bumped above 1 so the résumé reads less condensed and the
+// content fills two full pages rather than trailing off mid-page-two.
+const FS = Number(process.env.RESUME_FS) || 1.06;
 
 const SITE_URL = "https://matthewdenzin.ai";
 const SITE_LABEL = "matthewdenzin.ai";
@@ -57,22 +60,22 @@ const s = StyleSheet.create({
     paddingBottom: 38,
     paddingHorizontal: 50,
     fontFamily: "Helvetica",
-    fontSize: 9.4,
+    fontSize: 9.4 * FS,
     lineHeight: LH,
     color: ink,
   },
   // Header
-  name: { fontFamily: "Times-Roman", fontSize: 23, lineHeight: 1.1, color: ink, marginBottom: 2 },
-  suffix: { fontFamily: "Times-Roman", fontSize: 12, color: accent },
-  roles: { fontSize: 9.6, color: accent, marginTop: 3, letterSpacing: 0.4 },
-  contact: { fontSize: 8.5, color: muted, marginTop: 5 },
+  name: { fontFamily: "Times-Roman", fontSize: 23 * FS, lineHeight: 1.1, color: ink, marginBottom: 2 },
+  suffix: { fontFamily: "Times-Roman", fontSize: 12 * FS, color: accent },
+  roles: { fontSize: 9.6 * FS, color: accent, marginTop: 3, letterSpacing: 0.4 },
+  contact: { fontSize: 8.5 * FS, color: muted, marginTop: 5 },
   contactLink: { color: accent, textDecoration: "none" },
   sep: { color: border },
   rule: { borderBottomWidth: 1.5, borderBottomColor: accentDark, marginTop: 9, marginBottom: 2 },
   // Sections
   sectionTitle: {
     fontFamily: "Helvetica-Bold",
-    fontSize: 9.6,
+    fontSize: 9.6 * FS,
     color: accent,
     letterSpacing: 1.2,
     textTransform: "uppercase",
@@ -82,30 +85,30 @@ const s = StyleSheet.create({
     borderBottomColor: border,
     paddingBottom: 3.5,
   },
-  summary: { fontSize: 9.3, color: ink, marginTop: 1 },
+  summary: { fontSize: 9.3 * FS, color: ink, marginTop: 1 },
   // Competencies
   compRow: { marginBottom: 2.7 * SP },
   compLabel: { fontFamily: "Helvetica-Bold", color: ink },
   compItems: { color: muted },
   // Experience
   company: { marginTop: 8.5 * SP },
-  companyName: { fontFamily: "Helvetica-Bold", fontSize: 10.6, color: ink },
-  companyMeta: { fontSize: 8.4, color: muted, marginTop: 1.5 },
+  companyName: { fontFamily: "Helvetica-Bold", fontSize: 10.6 * FS, color: ink },
+  companyMeta: { fontSize: 8.4 * FS, color: muted, marginTop: 1.5 },
   posHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 5.5 * SP,
   },
-  posTitle: { fontFamily: "Helvetica-Bold", fontSize: 9.7, color: accentDark },
-  posDates: { fontSize: 8.4, color: muted },
+  posTitle: { fontFamily: "Helvetica-Bold", fontSize: 9.7 * FS, color: accentDark },
+  posDates: { fontSize: 8.4 * FS, color: muted },
   bulletRow: { flexDirection: "row", marginTop: 2.9 * SP, paddingLeft: 2 },
   bulletDot: { color: accent, marginRight: 6 },
   bulletText: { flex: 1, color: ink },
   // Education / cert two-col
   twoCol: { flexDirection: "row", justifyContent: "space-between" },
   col: { width: "48%" },
-  eduLine: { fontFamily: "Helvetica-Bold", fontSize: 9.5, color: ink },
-  eduMeta: { fontSize: 8.7, color: muted, marginTop: 1 },
+  eduLine: { fontFamily: "Helvetica-Bold", fontSize: 9.5 * FS, color: ink },
+  eduMeta: { fontSize: 8.7 * FS, color: muted, marginTop: 1 },
 });
 
 /** Significant (length > 3) lowercased word set, for redundancy comparison. */
@@ -185,16 +188,19 @@ function Experience() {
     View,
     null,
     e(Text, { style: s.sectionTitle }, "Experience"),
+    // Companies may break *between* positions across the page boundary (so the
+    // content flows and fills both pages), but each individual position is kept
+    // intact (wrap:false) and the company header is kept with its first role.
     ...experience.map((company) =>
       e(
         View,
-        { key: company.name, style: s.company, wrap: false },
-        e(Text, { style: s.companyName }, company.name),
+        { key: company.name, style: s.company },
+        e(Text, { style: s.companyName, minPresenceAhead: 60 }, company.name),
         e(Text, { style: s.companyMeta }, `${company.location}  ·  ${company.context}`),
         ...company.positions.map((pos) =>
           e(
             View,
-            { key: pos.title },
+            { key: pos.title, wrap: false },
             e(
               View,
               { style: s.posHeader },

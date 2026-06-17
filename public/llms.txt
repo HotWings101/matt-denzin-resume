@@ -3,9 +3,9 @@
 > Matthew "Matt" Denzin is a PMP-certified Product / Technical Project / Operations leader based in the Dallas–Fort Worth Metroplex, Texas, USA, with 15+ years delivering enterprise web platforms, OEM digital programs, and AI/workflow-automation products. He is actively seeking AI-first Product Management and Product/Program Management roles.
 
 ## Profile
-- Current: Product Operations Manager at Cox Automotive — Product Manager for WOMS, an enterprise Microsoft Power Platform workflow-automation product, owning discovery → roadmap → release → adoption.
-- Earlier: Sr. Technical Project Manager for OEM websites (Audi, Ford, Lincoln, Genesis, Hyundai, Toyota, Lexus, Honda); Sr. Production PM and Branding Specialist at Dealertrack/Dealer.com; Digital Advisor at ClickMotive (supported 250+ Toyota dealer sites).
-- Strengths: AI product management, RAG/LLM features, product roadmapping, backlog/sprint planning, Agile/Scrum/Kanban, KPI frameworks, UAT/QA, Power Platform (Dataverse, Power Automate), Salesforce, Jira, Azure DevOps, Power BI.
+- Current: Product Operations Manager at Cox Automotive — Product Manager for WOMS, an enterprise Microsoft Power Platform workflow-automation product, owning discovery → roadmap → release → adoption. Uses AI across the delivery cycle (drafting epics/user stories, generating QA scenarios and release notes, prioritizing the backlog) to absorb work that would traditionally need 3–4 roles — evolving toward a Release Train Engineer-style coordination role.
+- Earlier: Sr. Technical Project Manager for OEM websites (Audi, Ford, Lincoln, Genesis, Hyundai, Toyota, Lexus, Honda) — delivered digital-retailing initiatives on the fintech side of automotive, integrating OEM incentive feeds, DMS, and banks/lenders under accuracy and compliance requirements; Sr. Production PM and Branding Specialist at Dealertrack/Dealer.com; Digital Advisor at ClickMotive (supported 250+ Toyota dealer sites).
+- Strengths: AI-assisted delivery / AI for product operations, AI product management, RAG/LLM features, digital retailing & automotive fintech (incentive feeds, DMS, lender integrations), product roadmapping, backlog/sprint planning, Agile/Scrum/Kanban, KPI frameworks, UAT/QA, Power Platform (Dataverse, Power Automate), Salesforce, Jira, Azure DevOps, Power BI.
 - Education: B.A. Advertising (minor Marketing), University of North Texas. Certification: Project Management Professional (PMP), PMI, 2018.
 - Location: Dallas–Fort Worth Metroplex, Texas, USA.
 

@@ -76,14 +76,14 @@ export const profile = {
     "Product & operations leader turning complex, multi-brand technology programs into shipped, measurable outcomes.",
   /** Two-sentence elevator pitch tuned toward AI-first PM/Product roles. */
   pitch:
-    "I'm a PMP-certified product and operations leader with 15+ years delivering enterprise web platforms, OEM digital programs, and workflow-automation products across the automotive ecosystem. Vehicle pricing has run through every role I've held — DMS inventory feeds, OEM incentive feeds, digital retailing, and syndication to Google Vehicles for Sale — so I know first-hand how much accurate, competitive pricing matters to a dealer. I lead with discovery, ship with measurable KPIs, and I build the systems — increasingly AI-powered — that let teams move faster with less friction.",
+    "I'm a PMP-certified product and operations leader with 15+ years delivering enterprise web platforms, OEM digital programs, and workflow-automation products across the automotive ecosystem. As Product Operations Manager I now use AI across the delivery cycle — generating user stories, QA scenarios, and release artifacts — to absorb analyst, product-owner, and QA work so a lean team ships like a large one. Vehicle pricing and digital retailing have run through every role I've held — DMS inventory feeds, OEM incentive feeds, lender integrations, and syndication to Google Vehicles for Sale — so I know first-hand how accurate pricing and financing reach the consumer.",
   location: "Dallas–Fort Worth Metroplex",
   email: "mattdenzin@yahoo.com",
   phone: "(972) 489-6324",
   linkedin: "https://www.linkedin.com/in/matt-denzin-pmp-6b326110",
   linkedinLabel: "linkedin.com/in/matt-denzin-pmp",
   summary:
-    "Product-focused Operations Manager and PMP-certified leader with 15+ years delivering enterprise web platforms, OEM digital programs, and cross-functional technology initiatives. Deep, hands-on experience with dealer vehicle pricing across every role — DMS inventory feeds, OEM incentive feeds, digital retailing, and syndication to Google Vehicles for Sale. Strong in Agile product delivery, sprint planning, backlog refinement, product roadmapping, UAT/QA oversight, and release management. Proven ability to lead engineering, product, design, and operations teams across complex, multi-brand automotive ecosystems. Known for transparent communication, measurable outcomes, and a “get it done” leadership style.",
+    "Product-focused Operations Manager and PMP-certified leader with 15+ years delivering enterprise web platforms, OEM digital programs, and cross-functional technology initiatives. As Product Operations Manager, uses AI across the delivery cycle — drafting epics and user stories, generating QA scenarios and release notes, and prioritizing the backlog — to run leaner, faster product operations. Deep, hands-on experience with digital retailing and dealer vehicle pricing across every role — DMS inventory feeds, OEM incentive feeds, lender/financing integrations, and syndication to Google Vehicles for Sale. Strong in Agile product delivery, sprint planning, backlog refinement, product roadmapping, UAT/QA oversight, and release management. Known for transparent communication, measurable outcomes, and a “get it done” leadership style.",
 } as const;
 
 export const competencies: SkillGroup[] = [
@@ -183,9 +183,13 @@ export const experience: Company[] = [
         end: "April 2026",
         current: false,
         result:
-          "As Product Manager for WOMS — a custom-built CRM serving 200 fulfillment users — drove a 25% increase in monthly Managed Services client deliverable output (SEO, website creative, copywriting, and landing pages) across the digital marketing organization.",
+          "Used AI across the WOMS delivery cycle to absorb work that traditionally needed 3–4 dedicated roles — business analyst, product owner, QA analyst, and change management — running a leaner operation with real labor-cost savings while still driving a 25% increase in monthly Managed Services deliverable output (SEO, website creative, copywriting, and landing pages).",
         highlights: [
-          "Owned the full WOMS product lifecycle — vision, roadmap, discovery, requirements, release, and adoption — across multiple business units.",
+          "With AI absorbing the analyst, product-owner, and QA execution, the role evolved beyond a traditional Product Manager toward Release Train Engineer-style coordination — orchestrating delivery across the train rather than performing each function by hand.",
+          "Used AI to break end-user feature and enhancement requests into epics, features, and user stories, and to assign priority, ranking, and scoring across the backlog.",
+          "Each sprint before release, used AI to parse the developer change log and generate QA test scenarios, user acceptance criteria, and release notes.",
+          "Produced weekly AI-generated recommendation decks for stakeholders to review and provide input — a proactive, decision-ready format they specifically valued.",
+          "Owned the full WOMS product lifecycle — vision, roadmap, discovery, requirements, release, and adoption — for a custom-built CRM serving 200 fulfillment users across multiple business units.",
           "Stood up the KPI framework (cycle time, rework volume, throughput) that drove roadmap prioritization and the measured gains in deliverable output.",
           "Led a dealer vehicle-pricing initiative within the local SEO service line: defined the requirements and re-engineered dealer inventory data exports so accurate pricing flowed from the dealer feed to the DBA platform and on to Google — surfacing live dealer vehicle pricing on Google Vehicles for Sale.",
           "Automated fulfillment workflows with the Power Platform (model-driven apps, Dataverse, Power Automate) and Salesforce Lightning, cutting manual effort and lifting throughput.",
@@ -196,6 +200,9 @@ export const experience: Company[] = [
           "Standardized onboarding, training, and adoption workflows across SEO, HomeNet, AMP, and Autotrader business units, driving consistent platform engagement across the organization.",
         ],
         skills: [
+          "AI-Assisted Delivery",
+          "AI for Product Ops",
+          "Release Train Engineering",
           "Product Management",
           "Vehicle Pricing",
           "Inventory Feeds",
@@ -216,21 +223,25 @@ export const experience: Company[] = [
         result:
           "Created repeatable “fast-track” processes that compressed delivery timelines across 8 OEM brands, consistently landing programs ahead of schedule and under budget while controlling scope and risk.",
         highlights: [
+          "Delivered digital-retailing initiatives that put me squarely on the fintech side of automotive — coordinating integrations across OEM incentive feeds, DMS (dealer management systems), and banks/lenders to connect dealers, customers, and financing partners through a single platform under strict accuracy and compliance requirements.",
+          "Led a team through OEM website platform migrations — partnering directly with dealers to review and adjust their vehicle pricing displays, wiring up DMS inventory feeds and OEM incentive feeds, and standing up digital-retailing products on the migrated sites.",
           "Engineered “fast-track” delivery processes that compressed cycle time and let programs ship ahead of schedule.",
           "Owned scope, schedule, and budget across 8 global OEM brands — Audi, Ford, Lincoln, Genesis, Hyundai, Toyota, Lexus, and Honda — building WBS, baselines, and risk strategies that kept projects under budget.",
-          "Led a team through OEM website platform migrations — partnering directly with dealers to review and adjust their vehicle pricing displays, wiring up DMS inventory feeds and OEM incentive feeds, and standing up digital retailing products on the migrated sites.",
           "Managed the full project lifecycle for platform upgrades, rebranding, product add-ons, and workflow automation.",
           "Forecasted implementation output, team capacity, and KPI performance to support portfolio-level planning.",
           "Delivered consistent stakeholder communication through work performance reports, stand-ups, portfolio reviews, and automated reporting.",
           "Hardened PMO governance with standardized processes, templates, and lessons-learned that lowered the cost of future programs.",
         ],
         skills: [
-          "Program Management",
-          "OEM Platforms",
+          "Digital Retailing",
+          "Fintech (Automotive)",
+          "Lender / Financing Integrations",
           "OEM Incentive Feeds",
           "DMS Integration",
           "Vehicle Pricing",
-          "Digital Retailing",
+          "Compliance",
+          "Program Management",
+          "OEM Platforms",
           "Scope / Schedule / Budget",
           "WBS & Baselines",
           "Risk Management",

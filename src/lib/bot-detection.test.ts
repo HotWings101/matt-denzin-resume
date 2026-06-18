@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { classifyBot, type BotSignals, classifySource } from "./bot-detection";
+import {
+  classifyBot,
+  type BotSignals,
+  classifySource,
+  classifyIntent,
+  engagementScore,
+  classifyVisitorType,
+} from "./bot-detection";
 
 const base: BotSignals = {
   userAgent:
@@ -84,5 +91,53 @@ describe("classifySource", () => {
   it("falls back to UTM when referrer is absent", () => {
     expect(classifySource(null, "linkedin")).toBe("LinkedIn");
     expect(classifySource(null, "newsletter")).toBe("Referral");
+  });
+});
+
+describe("classifyIntent", () => {
+  const none = {
+    hasChat: false,
+    hasJd: false,
+    hasContact: false,
+    hasResumeDownload: false,
+    viewedExperience: false,
+    maxScroll: 10,
+    activeMs: 1000,
+  };
+  it("flags high intent on a high-value action", () => {
+    const r = classifyIntent({ ...none, hasResumeDownload: true });
+    expect(r.highIntent).toBe(true);
+    expect(r.reasons).toContain("Downloaded resume");
+  });
+  it("flags high intent on a full read", () => {
+    expect(classifyIntent({ ...none, maxScroll: 100, activeMs: 40000 }).highIntent).toBe(true);
+  });
+  it("is low intent for a shallow visit", () => {
+    expect(classifyIntent(none).highIntent).toBe(false);
+  });
+});
+
+describe("engagementScore", () => {
+  it("scores an idle bounce near zero", () => {
+    expect(engagementScore({ activeMs: 0, maxScroll: 0, pageViews: 1, interactions: 0 }))
+      .toBeLessThanOrEqual(5);
+  });
+  it("scores a deep engaged visit near 100", () => {
+    expect(engagementScore({ activeMs: 120000, maxScroll: 100, pageViews: 3, interactions: 2 }))
+      .toBe(100);
+  });
+  it("clamps to 0-100", () => {
+    const v = engagementScore({ activeMs: 9_999_999, maxScroll: 999, pageViews: 99, interactions: 99 });
+    expect(v).toBeLessThanOrEqual(100);
+    expect(v).toBeGreaterThanOrEqual(0);
+  });
+});
+
+describe("classifyVisitorType", () => {
+  it("marks the first session new", () => {
+    expect(classifyVisitorType(true, 1)).toEqual({ type: "new", visitCount: 1 });
+  });
+  it("marks later sessions returning with a visit count", () => {
+    expect(classifyVisitorType(false, 4)).toEqual({ type: "returning", visitCount: 4 });
   });
 });

@@ -111,3 +111,55 @@ export function classifySource(
   }
   return "Direct";
 }
+
+export interface IntentSignals {
+  hasChat: boolean;
+  hasJd: boolean;
+  hasContact: boolean;
+  hasResumeDownload: boolean;
+  viewedExperience: boolean;
+  maxScroll: number;
+  activeMs: number;
+}
+
+/** Flag recruiter / high-intent behavior. Any single high-value action qualifies. */
+export function classifyIntent(s: IntentSignals): { highIntent: boolean; reasons: string[] } {
+  const reasons: string[] = [];
+  if (s.hasResumeDownload) reasons.push("Downloaded resume");
+  if (s.hasContact) reasons.push("Contacted");
+  if (s.hasJd) reasons.push("Ran JD-Fit");
+  if (s.hasChat) reasons.push("Chatted");
+  if (s.viewedExperience) reasons.push("Viewed experience");
+  if (s.maxScroll >= 100 && s.activeMs >= 30000) reasons.push("Read fully");
+  return { highIntent: reasons.length > 0, reasons };
+}
+
+export interface EngagementSignals {
+  activeMs: number;
+  maxScroll: number;
+  pageViews: number;
+  interactions: number;
+}
+
+/**
+ * 0-100 engagement quality. Active time (cap 2m) 40pts, scroll 30pts,
+ * page views (cap 3) 10pts, interactions (cap 2) 20pts.
+ */
+export function engagementScore(s: EngagementSignals): number {
+  const active = Math.min(Math.max(s.activeMs, 0) / 120000, 1) * 40;
+  const scroll = Math.min(Math.max(s.maxScroll, 0) / 100, 1) * 30;
+  const pages = Math.min(Math.max(s.pageViews, 0) / 3, 1) * 10;
+  const interactions = Math.min(Math.max(s.interactions, 0) / 2, 1) * 20;
+  return Math.round(Math.min(active + scroll + pages + interactions, 100));
+}
+
+/** New vs returning, plus the visitor's total visit count (>= 1). */
+export function classifyVisitorType(
+  isFirstSession: boolean,
+  totalVisits: number,
+): { type: "new" | "returning"; visitCount: number } {
+  return {
+    type: isFirstSession ? "new" : "returning",
+    visitCount: Math.max(totalVisits, 1),
+  };
+}

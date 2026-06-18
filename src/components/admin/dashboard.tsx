@@ -111,7 +111,25 @@ export function AnalyticsDashboard({
         <Overview data={data} onVisitors={() => setTab("visitors")} />
       )}
       {tab === "audience" && <Audience data={data} />}
-      {tab === "visitors" && <VisitorsTab sessions={visitors} />}
+      {tab === "visitors" && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            <StatCard label="Humans" value={data.summary.humans} />
+            <StatCard label="Bots filtered" value={data.summary.bots} />
+            <StatCard
+              label="New / Returning"
+              value={`${data.summary.newVisitors} / ${data.summary.returningVisitors}`}
+              sub="this period"
+            />
+            <StatCard
+              label="Returning rate"
+              value={`${data.summary.returningRate}%`}
+              accent
+            />
+          </div>
+          <VisitorsTab sessions={visitors} />
+        </div>
+      )}
       {tab === "engagement" && <Engagement data={data} />}
       {tab === "conversations" && <Conversations data={data} />}
       {tab === "jd" && <JdAnalyses data={data} />}
@@ -185,6 +203,9 @@ function Audience({ data }: { data: AnalyticsData }) {
       </Panel>
       <Panel title="Referrers">
         <BarList items={data.topReferrers} />
+      </Panel>
+      <Panel title="Traffic sources">
+        <BarList items={data.trafficSources} emptyLabel="No traffic-source data yet." />
       </Panel>
       <Panel title="Devices">
         <BarList items={data.devices} accentClass="bg-foreground" />

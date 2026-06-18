@@ -15,6 +15,7 @@ import {
   LogOut,
   Mail,
   Target,
+  Gauge,
 } from "lucide-react";
 import type { VisitorSession, VisitorEvent } from "@/lib/visitors";
 import { cn } from "@/lib/utils";
@@ -23,17 +24,35 @@ import { Panel, formatDuration, relativeTime } from "./ui";
 /** "Visitors" tab — drill-down list of sessions with an expandable journey timeline.
  *  Mount: <VisitorsTab sessions={sessions} /> (sessions: VisitorSession[]). */
 export function VisitorsTab({ sessions }: { sessions: VisitorSession[] }) {
+  const [showBots, setShowBots] = useState(false);
+
   const ordered = [...sessions].sort(
     (a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime(),
   );
+  const humans = ordered.filter((s) => s.botVerdict === "human");
+  const bots = ordered.filter((s) => s.botVerdict !== "human");
+  const visible = showBots ? ordered : humans;
 
   return (
-    <Panel title={`Visitors (${ordered.length})`}>
-      {ordered.length === 0 ? (
+    <Panel
+      title={`Visitors (${humans.length})`}
+      action={
+        bots.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => setShowBots((v) => !v)}
+            className="rounded-full border border-border px-3 py-1 font-mono text-[0.65rem] uppercase tracking-wide text-muted transition-colors hover:text-foreground"
+          >
+            {showBots ? "Hide bots" : `Show bots (${bots.length})`}
+          </button>
+        ) : undefined
+      }
+    >
+      {visible.length === 0 ? (
         <p className="text-sm text-muted">No visitor sessions yet.</p>
       ) : (
         <ul className="divide-y divide-border">
-          {ordered.map((s) => (
+          {visible.map((s) => (
             <SessionRow key={s.sessionId} session={s} />
           ))}
         </ul>
@@ -60,12 +79,34 @@ function SessionRow({ session: s }: { session: VisitorSession }) {
         className="flex w-full items-center gap-3 py-3 text-left transition-colors hover:bg-surface-2/40"
       >
         {/* Visitor id + time */}
-        <div className="min-w-0 basis-44 shrink-0">
-          <p className="truncate font-mono text-sm text-foreground">
-            {visitorLabel}
+        <div className="min-w-0 basis-48 shrink-0">
+          <p className="flex items-center gap-1.5 font-mono text-sm text-foreground">
+            <span className="min-w-0 truncate">{visitorLabel}</span>
+            {s.botVerdict !== "human" ? (
+              <span
+                title={s.botReasons.join(" · ") || s.botVerdict}
+                className="rounded-full bg-clay/10 px-1.5 py-0.5 font-mono text-[0.55rem] uppercase tracking-wide text-clay"
+              >
+                {s.botVerdict === "bot" ? "Bot" : "Likely bot"}
+              </span>
+            ) : s.visitorType === "returning" ? (
+              <span className="rounded-full bg-accent-soft px-1.5 py-0.5 font-mono text-[0.55rem] uppercase tracking-wide text-accent-strong">
+                Return ×{s.visitCount}
+              </span>
+            ) : (
+              <span className="rounded-full bg-surface-2 px-1.5 py-0.5 font-mono text-[0.55rem] uppercase tracking-wide text-muted">
+                New
+              </span>
+            )}
           </p>
-          <p className="mt-0.5 font-mono text-[0.68rem] text-faint">
+          <p className="mt-0.5 flex items-center gap-2 font-mono text-[0.68rem] text-faint">
             {relativeTime(s.startedAt)}
+            <span className="text-muted">· {s.source}</span>
+            {s.highIntent && (
+              <span title={s.intentReasons.join(" · ")} className="text-accent">
+                ★ intent
+              </span>
+            )}
           </p>
         </div>
 
@@ -92,6 +133,13 @@ function SessionRow({ session: s }: { session: VisitorSession }) {
           <span className="inline-flex items-center gap-1 text-faint">
             <Eye className="size-3.5" />
             {s.pageViews}
+          </span>
+          <span
+            title="Engagement quality (0-100)"
+            className="inline-flex items-center gap-1 text-faint"
+          >
+            <Gauge className="size-3.5" />
+            {s.engagement}
           </span>
         </div>
 

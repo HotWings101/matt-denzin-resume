@@ -1,4 +1,13 @@
 import { getAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
+import {
+  classifyBot,
+  classifySource,
+  classifyIntent,
+  engagementScore,
+  classifyVisitorType,
+  type BotVerdict,
+  type TrafficSource,
+} from "@/lib/bot-detection";
 
 /**
  * Shared, exact type contract between the data layer (here) and the admin UI.
@@ -33,6 +42,15 @@ export interface VisitorSession {
   conversation: { role: string; content: string }[]; // this visitor's chat (may be [])
   jd: { roleTitle: string | null; company: string | null; fitScore: number | null }[];
   contact: { name: string; email: string; message: string } | null;
+  // --- derived classification (read-time) ---
+  botVerdict: BotVerdict;
+  botReasons: string[];
+  visitorType: "new" | "returning";
+  visitCount: number;
+  source: TrafficSource;
+  highIntent: boolean;
+  intentReasons: string[];
+  engagement: number; // 0-100
 }
 
 /** Caps to keep payloads bounded. */
@@ -66,6 +84,8 @@ interface SessionRow {
   referrer: string | null;
   entry_path: string | null;
   exit_path: string | null;
+  user_agent: string | null;
+  utm_source: string | null;
 }
 
 interface EventRow {
@@ -115,7 +135,7 @@ export async function getRecentVisitorSessions(days = 30): Promise<VisitorSessio
     const sessionsRes = await supabase
       .from("sessions")
       .select(
-        "id,visitor_id,first_seen,duration_ms,active_ms,page_views,events_count,max_scroll,bounced,device,browser,os,country,region,city,referrer,entry_path,exit_path",
+        "id,visitor_id,first_seen,duration_ms,active_ms,page_views,events_count,max_scroll,bounced,device,browser,os,country,region,city,referrer,entry_path,exit_path,user_agent,utm_source",
       )
       .gte("created_at", since)
       .order("last_seen", { ascending: false })
@@ -132,6 +152,24 @@ export async function getRecentVisitorSessions(days = 30): Promise<VisitorSessio
           .filter((v): v is string => Boolean(v)),
       ),
     ];
+
+    // All-time session timestamps per visitor → new/returning + visit count.
+    const visitsByVisitor = new Map<string, string[]>(); // visitorId -> first_seen[]
+    if (visitorIds.length > 0) {
+      const allRes = await supabase
+        .from("sessions")
+        .select("visitor_id,first_seen")
+        .in("visitor_id", visitorIds)
+        // Safety bound only — well above realistic résumé traffic. If ever hit,
+        // a visitor's visitCount is undercounted (worst case: mis-badged "new").
+        .limit(10000);
+      for (const r of (allRes.data ?? []) as { visitor_id: string | null; first_seen: string | null }[]) {
+        if (!r.visitor_id || !r.first_seen) continue;
+        const arr = visitsByVisitor.get(r.visitor_id) ?? [];
+        arr.push(r.first_seen);
+        visitsByVisitor.set(r.visitor_id, arr);
+      }
+    }
 
     // 2) Events for those sessions, oldest-first, grouped into journeys.
     const eventsRes = await supabase
@@ -236,6 +274,65 @@ export async function getRecentVisitorSessions(days = 30): Promise<VisitorSessio
     // 4) Assemble.
     return sessionRows.map((s) => {
       const vId = s.visitor_id;
+      const journey = journeyBySession.get(s.id) ?? [];
+      const conversation = (vId && conversationByVisitor.get(vId)) || [];
+      const jd = (vId && jdByVisitor.get(vId)) || [];
+      const contact = (vId && contactByVisitor.get(vId)) || null;
+
+      const durationMs = s.duration_ms ?? 0;
+      const activeMs = s.active_ms ?? 0;
+      const maxScroll = s.max_scroll ?? 0;
+
+      const hasChat = conversation.length > 0;
+      const hasJd = jd.length > 0;
+      const hasContact = Boolean(contact);
+      const hasResumeDownload = journey.some((e) => e.type === "resume_download");
+      const viewedExperience =
+        s.entry_path === "/experience" ||
+        s.exit_path === "/experience" ||
+        journey.some(
+          (e) => e.type === "page_view" && String(e.meta?.path ?? "") === "/experience",
+        );
+
+      const humanAction =
+        hasChat ||
+        hasJd ||
+        hasContact ||
+        hasResumeDownload ||
+        (maxScroll > 50 && activeMs >= 10000);
+
+      const interactions = [hasChat, hasJd, hasContact, hasResumeDownload].filter(
+        Boolean,
+      ).length;
+
+      const bot = classifyBot({
+        userAgent: s.user_agent,
+        country: s.country,
+        city: s.city,
+        durationMs,
+        activeMs,
+        maxScroll,
+        pageViews: s.page_views ?? 0,
+        eventsCount: s.events_count ?? 0,
+        humanAction,
+      });
+
+      const visits = (vId && visitsByVisitor.get(vId)) || [];
+      const totalVisits = visits.length || 1;
+      const thisStart = s.first_seen ?? "";
+      const isFirstSession = !visits.some((ts) => ts < thisStart);
+      const visitorType = classifyVisitorType(isFirstSession, totalVisits);
+
+      const intent = classifyIntent({
+        hasChat,
+        hasJd,
+        hasContact,
+        hasResumeDownload,
+        viewedExperience,
+        maxScroll,
+        activeMs,
+      });
+
       return {
         sessionId: s.id,
         visitorId: vId,
@@ -243,7 +340,7 @@ export async function getRecentVisitorSessions(days = 30): Promise<VisitorSessio
         durationSec: msToSec(s.duration_ms),
         activeSec: msToSec(s.active_ms),
         pageViews: s.page_views ?? 0,
-        maxScroll: s.max_scroll ?? 0,
+        maxScroll,
         bounced: Boolean(s.bounced),
         eventsCount: s.events_count ?? 0,
         device: s.device,
@@ -255,10 +352,23 @@ export async function getRecentVisitorSessions(days = 30): Promise<VisitorSessio
         referrer: s.referrer,
         entryPath: s.entry_path,
         exitPath: s.exit_path,
-        journey: journeyBySession.get(s.id) ?? [],
-        conversation: (vId && conversationByVisitor.get(vId)) || [],
-        jd: (vId && jdByVisitor.get(vId)) || [],
-        contact: (vId && contactByVisitor.get(vId)) || null,
+        journey,
+        conversation,
+        jd,
+        contact,
+        botVerdict: bot.verdict,
+        botReasons: bot.reasons,
+        visitorType: visitorType.type,
+        visitCount: visitorType.visitCount,
+        source: classifySource(s.referrer, s.utm_source),
+        highIntent: intent.highIntent,
+        intentReasons: intent.reasons,
+        engagement: engagementScore({
+          activeMs,
+          maxScroll,
+          pageViews: s.page_views ?? 0,
+          interactions,
+        }),
       };
     });
   } catch (err) {

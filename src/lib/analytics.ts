@@ -1,4 +1,5 @@
 import { getAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
+import { classifyBot, classifySource } from "@/lib/bot-detection";
 
 export interface Counted {
   key: string;
@@ -49,6 +50,14 @@ export interface AnalyticsData {
     jdAnalyses: number;
     contacts: number;
   };
+  summary: {
+    humans: number;
+    bots: number;
+    newVisitors: number;
+    returningVisitors: number;
+    returningRate: number;
+  };
+  trafficSources: Counted[];
   daily: { day: string; views: number; visitors: number }[];
   topReferrers: Counted[];
   devices: Counted[];
@@ -77,6 +86,14 @@ const EMPTY: AnalyticsData = {
     jdAnalyses: 0,
     contacts: 0,
   },
+  summary: {
+    humans: 0,
+    bots: 0,
+    newVisitors: 0,
+    returningVisitors: 0,
+    returningRate: 0,
+  },
+  trafficSources: [],
   daily: [],
   topReferrers: [],
   devices: [],
@@ -132,7 +149,6 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
     const since = new Date(Date.now() - days * 86400000).toISOString();
 
     const [
-      pvCount,
       jdCount,
       contactCount,
       chatQCount,
@@ -147,11 +163,10 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       chatSessRes,
       crawlerRes,
     ] = await Promise.all([
-      supabase.from("events").select("*", { count: "exact", head: true }).eq("type", "page_view").gte("created_at", since),
       supabase.from("jd_analyses").select("*", { count: "exact", head: true }).gte("created_at", since),
       supabase.from("contact_messages").select("*", { count: "exact", head: true }).gte("created_at", since),
       supabase.from("chat_messages").select("*", { count: "exact", head: true }).eq("role", "user").gte("created_at", since),
-      supabase.from("sessions").select("visitor_id,duration_ms,active_ms,bounced,device,browser,country,referrer").gte("created_at", since).limit(8000),
+      supabase.from("sessions").select("visitor_id,duration_ms,active_ms,bounced,device,browser,country,city,referrer,user_agent,utm_source,max_scroll,page_views,events_count").gte("created_at", since).limit(8000),
       supabase.from("events").select("visitor_id,created_at").eq("type", "page_view").gte("created_at", since).limit(20000),
       supabase.from("events").select("meta").eq("type", "section_view").gte("created_at", since).limit(10000),
       supabase.from("events").select("meta").eq("type", "scroll_depth").gte("created_at", since).limit(10000),
@@ -171,20 +186,68 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       device: string | null;
       browser: string | null;
       country: string | null;
+      city: string | null;
       referrer: string | null;
+      user_agent: string | null;
+      utm_source: string | null;
+      max_scroll: number | null;
+      page_views: number | null;
+      events_count: number | null;
     }>;
-    const sessionCount = sessions.length;
-    const bounced = sessions.filter((s) => s.bounced).length;
+    // Classify each session; headline stats count humans only.
+    const isHuman = (s: (typeof sessions)[number]): boolean =>
+      classifyBot({
+        userAgent: s.user_agent,
+        country: s.country,
+        city: s.city,
+        durationMs: s.duration_ms ?? 0,
+        activeMs: s.active_ms ?? 0,
+        maxScroll: s.max_scroll ?? 0,
+        pageViews: s.page_views ?? 0,
+        eventsCount: s.events_count ?? 0,
+        humanAction: !s.bounced, // engaged sessions are treated as human
+      }).verdict === "human";
+
+    const humanSessions = sessions.filter(isHuman);
+    const botCount = sessions.length - humanSessions.length;
+
+    const sessionCount = humanSessions.length;
+    const bounced = humanSessions.filter((s) => s.bounced).length;
     const bounceRate = sessionCount ? Math.round((bounced / sessionCount) * 100) : 0;
     const avgDurationSec = sessionCount
-      ? Math.round(sessions.reduce((a, s) => a + (s.duration_ms ?? 0), 0) / sessionCount / 1000)
+      ? Math.round(humanSessions.reduce((a, s) => a + (s.duration_ms ?? 0), 0) / sessionCount / 1000)
       : 0;
     const avgActiveSec = sessionCount
-      ? Math.round(sessions.reduce((a, s) => a + (s.active_ms ?? 0), 0) / sessionCount / 1000)
+      ? Math.round(humanSessions.reduce((a, s) => a + (s.active_ms ?? 0), 0) / sessionCount / 1000)
       : 0;
 
+    // New vs returning (within this period): visitors with >1 human session are returning.
+    const sessionsPerVisitor = new Map<string, number>();
+    for (const s of humanSessions) {
+      if (!s.visitor_id) continue;
+      sessionsPerVisitor.set(s.visitor_id, (sessionsPerVisitor.get(s.visitor_id) ?? 0) + 1);
+    }
+    let newVisitors = 0;
+    let returningVisitors = 0;
+    for (const count of sessionsPerVisitor.values()) {
+      if (count > 1) returningVisitors++;
+      else newVisitors++;
+    }
+    const totalKnown = newVisitors + returningVisitors;
+    const returningRate = totalKnown
+      ? Math.round((returningVisitors / totalKnown) * 100)
+      : 0;
+
+    const humanPageViews = humanSessions.reduce((a, s) => a + (s.page_views ?? 0), 0);
+    const humanUniqueVisitors = new Set(
+      humanSessions.map((s) => s.visitor_id).filter(Boolean),
+    ).size;
+
+    const trafficSources = tally(
+      humanSessions.map((s) => classifySource(s.referrer, s.utm_source)),
+    );
+
     const pv = (pvRows.data ?? []) as Array<{ visitor_id: string | null; created_at: string }>;
-    const uniqueVisitors = new Set(pv.map((r) => r.visitor_id).filter(Boolean)).size;
 
     const dayMap = new Map<string, { views: number; visitors: Set<string> }>();
     for (const r of pv) {
@@ -200,10 +263,10 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       visitors: dayMap.get(day)?.visitors.size ?? 0,
     }));
 
-    const topReferrers = tally(sessions.map((s) => refHost(s.referrer)), 10);
-    const devices = tally(sessions.map((s) => s.device), 6);
-    const browsers = tally(sessions.map((s) => s.browser), 8);
-    const countries = tally(sessions.map((s) => s.country), 12);
+    const topReferrers = tally(humanSessions.map((s) => refHost(s.referrer)), 10);
+    const devices = tally(humanSessions.map((s) => s.device), 6);
+    const browsers = tally(humanSessions.map((s) => s.browser), 8);
+    const countries = tally(humanSessions.map((s) => s.country), 12);
 
     const crawlerMap = new Map<string, { count: number; lastSeen: string }>();
     for (const r of (crawlerRes.data ?? []) as Array<{
@@ -279,8 +342,8 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
     return {
       days,
       totals: {
-        pageViews: pvCount.count ?? 0,
-        uniqueVisitors,
+        pageViews: humanPageViews,
+        uniqueVisitors: humanUniqueVisitors,
         sessions: sessionCount,
         bounceRate,
         avgDurationSec,
@@ -289,6 +352,14 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
         jdAnalyses: jdCount.count ?? 0,
         contacts: contactCount.count ?? 0,
       },
+      summary: {
+        humans: humanSessions.length,
+        bots: botCount,
+        newVisitors,
+        returningVisitors,
+        returningRate,
+      },
+      trafficSources,
       daily,
       topReferrers,
       devices,

@@ -160,6 +160,8 @@ export async function getRecentVisitorSessions(days = 30): Promise<VisitorSessio
         .from("sessions")
         .select("visitor_id,first_seen")
         .in("visitor_id", visitorIds)
+        // Safety bound only — well above realistic résumé traffic. If ever hit,
+        // a visitor's visitCount is undercounted (worst case: mis-badged "new").
         .limit(10000);
       for (const r of (allRes.data ?? []) as { visitor_id: string | null; first_seen: string | null }[]) {
         if (!r.visitor_id || !r.first_seen) continue;

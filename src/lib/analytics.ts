@@ -149,7 +149,6 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
     const since = new Date(Date.now() - days * 86400000).toISOString();
 
     const [
-      pvCount,
       jdCount,
       contactCount,
       chatQCount,
@@ -164,7 +163,6 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       chatSessRes,
       crawlerRes,
     ] = await Promise.all([
-      supabase.from("events").select("*", { count: "exact", head: true }).eq("type", "page_view").gte("created_at", since),
       supabase.from("jd_analyses").select("*", { count: "exact", head: true }).gte("created_at", since),
       supabase.from("contact_messages").select("*", { count: "exact", head: true }).gte("created_at", since),
       supabase.from("chat_messages").select("*", { count: "exact", head: true }).eq("role", "user").gte("created_at", since),
@@ -250,7 +248,6 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
     );
 
     const pv = (pvRows.data ?? []) as Array<{ visitor_id: string | null; created_at: string }>;
-    const uniqueVisitors = new Set(pv.map((r) => r.visitor_id).filter(Boolean)).size;
 
     const dayMap = new Map<string, { views: number; visitors: Set<string> }>();
     for (const r of pv) {

@@ -80,11 +80,11 @@ function SessionRow({ session: s }: { session: VisitorSession }) {
       >
         {/* Visitor id + time */}
         <div className="min-w-0 basis-48 shrink-0">
-          <p className="flex items-center gap-1.5 truncate font-mono text-sm text-foreground">
-            {visitorLabel}
+          <p className="flex items-center gap-1.5 font-mono text-sm text-foreground">
+            <span className="min-w-0 truncate">{visitorLabel}</span>
             {s.botVerdict !== "human" ? (
               <span
-                title={s.botReasons.join(" · ")}
+                title={s.botReasons.join(" · ") || s.botVerdict}
                 className="rounded-full bg-clay/10 px-1.5 py-0.5 font-mono text-[0.55rem] uppercase tracking-wide text-clay"
               >
                 {s.botVerdict === "bot" ? "Bot" : "Likely bot"}

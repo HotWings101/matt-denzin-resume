@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { classifyBot, type BotSignals } from "./bot-detection";
+import { classifyBot, type BotSignals, classifySource } from "./bot-detection";
 
 const base: BotSignals = {
   userAgent:
@@ -66,5 +66,23 @@ describe("classifyBot", () => {
       humanAction: true,
     });
     expect(r.verdict).toBe("human");
+  });
+});
+
+describe("classifySource", () => {
+  it("buckets by referrer host", () => {
+    expect(classifySource("https://www.google.com/", null)).toBe("Google Search");
+    expect(classifySource("https://www.linkedin.com/feed/", null)).toBe("LinkedIn");
+    expect(classifySource("https://t.co/abc", null)).toBe("Social");
+    expect(classifySource("https://www.indeed.com/job", null)).toBe("Job board");
+    expect(classifySource("https://someblog.dev/post", null)).toBe("Referral");
+  });
+  it("returns Direct when there is no referrer or UTM", () => {
+    expect(classifySource(null, null)).toBe("Direct");
+    expect(classifySource("", null)).toBe("Direct");
+  });
+  it("falls back to UTM when referrer is absent", () => {
+    expect(classifySource(null, "linkedin")).toBe("LinkedIn");
+    expect(classifySource(null, "newsletter")).toBe("Referral");
   });
 });

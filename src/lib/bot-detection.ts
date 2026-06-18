@@ -64,3 +64,50 @@ export function classifyBot(s: BotSignals): { verdict: BotVerdict; reasons: stri
   if (score >= 3) return { verdict: "likely-bot", reasons };
   return { verdict: "human", reasons: [] };
 }
+
+export type TrafficSource =
+  | "Direct"
+  | "Google Search"
+  | "LinkedIn"
+  | "Social"
+  | "Job board"
+  | "Referral";
+
+function hostOf(referrer: string | null): string | null {
+  if (!referrer) return null;
+  try {
+    return new URL(referrer).hostname.replace(/^www\./, "").toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
+function sourceFromHost(h: string): TrafficSource | null {
+  if (/google\.|bing\.|duckduckgo\.|yahoo\.|ecosia\.|brave\.|search\./.test(h))
+    return "Google Search";
+  if (h.includes("linkedin.")) return "LinkedIn";
+  if (/twitter\.|x\.com|t\.co|facebook\.|fb\.|instagram\.|reddit\.|youtube\.|ycombinator|mastodon/.test(h))
+    return "Social";
+  if (/indeed\.|glassdoor\.|ziprecruiter\.|dice\.|monster\.|lever\.co|greenhouse|wellfound|angellist/.test(h))
+    return "Job board";
+  return null;
+}
+
+/** Classify a visit's traffic source from referrer host (preferred) or utm_source. */
+export function classifySource(
+  referrer: string | null,
+  utmSource: string | null,
+): TrafficSource {
+  const host = hostOf(referrer);
+  if (host) return sourceFromHost(host) ?? "Referral";
+
+  if (utmSource) {
+    const u = utmSource.toLowerCase();
+    if (u.includes("linkedin")) return "LinkedIn";
+    if (/google|bing|duckduckgo|yahoo|search/.test(u)) return "Google Search";
+    if (/twitter|facebook|instagram|reddit|youtube|social|x\.com/.test(u)) return "Social";
+    if (/indeed|glassdoor|ziprecruiter|dice|monster|lever|greenhouse|job/.test(u)) return "Job board";
+    return "Referral";
+  }
+  return "Direct";
+}

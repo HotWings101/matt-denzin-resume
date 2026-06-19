@@ -19,7 +19,7 @@ export default function GoodVibesPage() {
         <Section
           id="good-vibes"
           eyebrow="Good Vibes"
-          title="Good vibes."
+          title="It's a feeling."
           intro="Are you ready for success? Press play — let's GO!"
           grid
         >

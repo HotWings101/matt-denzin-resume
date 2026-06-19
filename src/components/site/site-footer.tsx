@@ -54,7 +54,7 @@ export function SiteFooter() {
               className="group mt-3 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent"
             >
               <TrexIcon className="size-4 shrink-0 text-faint transition-colors group-hover:text-accent" />
-              Are you a dinosaur
+              Are you a dinosaur?
             </Link>
           </div>
 

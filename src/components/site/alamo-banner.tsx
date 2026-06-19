@@ -42,6 +42,32 @@ export function AlamoBanner() {
               </Link>
             </p>
           </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 [text-shadow:0_1px_8px_rgba(0,0,0,0.7)]">
+              <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/60">
+                Further reading
+              </span>
+              <a
+                href="https://mitsloan.mit.edu/ideas-made-to-matter/why-generative-ai-needs-a-creative-human-touch"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/85 underline decoration-white/30 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+              >
+                Why generative AI needs a creative human touch
+                <span className="text-white/50"> · MIT Sloan</span>
+              </a>
+              <a
+                href="https://www.microsoft.com/en-us/worklab/the-essential-human-skills-for-ai-success-focus-on-the-5cs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/85 underline decoration-white/30 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+              >
+                The human skills for AI success: the 5 C&rsquo;s
+                <span className="text-white/50"> · Microsoft</span>
+              </a>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

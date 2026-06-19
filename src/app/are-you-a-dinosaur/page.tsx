@@ -42,7 +42,7 @@ export default function AreYouADinosaurPage() {
           <div className="relative mx-auto flex min-h-[100svh] w-full max-w-3xl flex-col items-center justify-center px-6 text-center">
             <div className="-translate-y-[6vh]">
               <h1 className="font-display text-balance text-3xl font-medium leading-[1.1] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.6)] sm:text-4xl md:text-5xl">
-                Are you a dinosaur?
+                Don&apos;t be a dinosaur.
               </h1>
               <figure className="mt-6">
                 <blockquote className="font-display text-balance text-lg font-medium leading-snug text-white/90 [text-shadow:0_2px_16px_rgba(0,0,0,0.6)] sm:text-xl md:text-2xl">

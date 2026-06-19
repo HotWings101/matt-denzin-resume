@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { profile } from "@/data/resume";
-import { LinkedinIcon, TexasFlagIcon, TrexIcon } from "@/components/ui/icons";
+import { LinkedinIcon, TexasFlagIcon } from "@/components/ui/icons";
 
 interface FooterLink {
   href: string;
@@ -48,13 +48,15 @@ export function SiteFooter() {
               </span>
             </div>
 
-            {/* Are you a dinosaur? */}
+            {/* Don't be a dinosaur. */}
             <Link
               href="/are-you-a-dinosaur"
               className="group mt-3 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent"
             >
-              <TrexIcon className="size-4 shrink-0 text-faint transition-colors group-hover:text-accent" />
-              Are you a dinosaur?
+              <span aria-hidden="true" className="text-base leading-none">
+                🦖
+              </span>
+              Don&apos;t be a dinosaur.
             </Link>
           </div>
 

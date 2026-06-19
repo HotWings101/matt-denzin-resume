@@ -50,33 +50,35 @@ export function TexasFlagIcon({ className, ...props }: SVGProps<SVGSVGElement>) 
 export function TrexIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 32 32"
       fill="currentColor"
       aria-hidden="true"
       className={className}
       {...props}
     >
-      {/* head + snout */}
-      <rect x="14" y="0" width="6" height="2" />
-      <rect x="14" y="2" width="8" height="2" />
-      <rect x="14" y="4" width="6" height="2" />
-      <rect x="12" y="6" width="8" height="2" />
-      {/* tail (upper-left) */}
-      <rect x="4" y="4" width="4" height="2" />
-      <rect x="4" y="6" width="6" height="2" />
-      {/* body */}
-      <rect x="6" y="8" width="14" height="2" />
-      <rect x="6" y="10" width="12" height="2" />
-      <rect x="6" y="12" width="14" height="2" />
-      <rect x="6" y="14" width="12" height="2" />
+      {/* head + snout (raised, upper-right) */}
+      <rect x="22" y="0" width="6" height="2" />
+      <rect x="22" y="2" width="8" height="2" />
+      <rect x="22" y="4" width="6" height="2" />
+      <rect x="22" y="6" width="8" height="2" />
+      <rect x="20" y="8" width="8" height="2" />
+      {/* neck + tail tip */}
+      <rect x="4" y="10" width="4" height="2" />
+      <rect x="18" y="10" width="6" height="2" />
+      {/* back + body */}
+      <rect x="2" y="12" width="20" height="2" />
+      <rect x="6" y="14" width="16" height="2" />
+      <rect x="6" y="16" width="18" height="2" />
+      <rect x="6" y="18" width="14" height="2" />
+      <rect x="6" y="20" width="14" height="2" />
       {/* legs */}
-      <rect x="6" y="16" width="4" height="2" />
-      <rect x="14" y="16" width="4" height="2" />
-      <rect x="6" y="18" width="4" height="2" />
-      <rect x="14" y="18" width="4" height="2" />
+      <rect x="8" y="22" width="4" height="2" />
+      <rect x="16" y="22" width="4" height="2" />
+      <rect x="8" y="24" width="4" height="2" />
+      <rect x="16" y="24" width="4" height="2" />
       {/* feet */}
-      <rect x="4" y="20" width="6" height="2" />
-      <rect x="14" y="20" width="6" height="2" />
+      <rect x="6" y="26" width="6" height="2" />
+      <rect x="16" y="26" width="6" height="2" />
     </svg>
   );
 }

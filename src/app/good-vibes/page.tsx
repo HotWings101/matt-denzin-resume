@@ -7,7 +7,7 @@ import { Section } from "@/components/site/section";
 
 export const metadata: Metadata = {
   title: "Good Vibes",
-  description: "A little something outside the résumé.",
+  description: "Are you ready for success? Press play — let's GO!",
   alternates: { canonical: "/good-vibes" },
 };
 
@@ -20,7 +20,7 @@ export default function GoodVibesPage() {
           id="good-vibes"
           eyebrow="Good Vibes"
           title="Good vibes."
-          intro="A little something outside the résumé — press play."
+          intro="Are you ready for success? Press play — let's GO!"
           grid
         >
           <div className="mx-auto w-full max-w-3xl">

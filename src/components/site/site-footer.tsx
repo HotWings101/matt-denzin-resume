@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { profile } from "@/data/resume";
-import { LinkedinIcon, TexasFlagIcon } from "@/components/ui/icons";
+import { LinkedinIcon, TexasFlagIcon, TrexIcon } from "@/components/ui/icons";
 
 interface FooterLink {
   href: string;
@@ -47,6 +47,15 @@ export function SiteFooter() {
                 This website was handcrafted and designed in the state of Texas.
               </span>
             </div>
+
+            {/* Are you a dinosaur? */}
+            <Link
+              href="/are-you-a-dinosaur"
+              className="group mt-3 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent"
+            >
+              <TrexIcon className="size-4 shrink-0 text-faint transition-colors group-hover:text-accent" />
+              Are you a dinosaur
+            </Link>
           </div>
 
           {/* Quick links */}

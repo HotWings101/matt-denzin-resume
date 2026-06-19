@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- full-bleed statement artwork */
+import Link from "next/link";
 import { Reveal } from "./reveal";
 
 /**
@@ -33,7 +34,12 @@ export function AlamoBanner() {
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>
             <p className="font-display text-balance text-3xl leading-[1.1] tracking-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.6)] sm:text-4xl md:text-5xl">
-              Bold people with big ideas change the world.
+              <Link
+                href="/why-not"
+                className="transition-colors hover:text-accent"
+              >
+                Bold people with big ideas change the world.
+              </Link>
             </p>
           </Reveal>
         </div>

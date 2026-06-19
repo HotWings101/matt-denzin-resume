@@ -213,37 +213,144 @@ function Audience({ data }: { data: AnalyticsData }) {
       <Panel title="Browsers">
         <BarList items={data.browsers} accentClass="bg-foreground" />
       </Panel>
-      <Panel title="AI / LLM crawler visits" className="md:col-span-2">
-        {data.crawlers.length === 0 ? (
-          <p className="text-sm text-muted">
-            No AI crawlers detected yet — GPTBot, ClaudeBot, PerplexityBot,
-            Google-Extended and others will appear here once they index the site.
-          </p>
-        ) : (
-          <ul className="divide-y divide-border">
-            {data.crawlers.map((c) => (
-              <li
-                key={c.bot}
-                className="flex items-center justify-between gap-3 py-2.5"
-              >
-                <span className="flex items-center gap-2 text-sm text-foreground">
-                  <Bot className="size-4 text-accent" />
-                  {c.bot}
-                </span>
-                <span className="flex items-center gap-5">
-                  <span className="font-mono text-xs text-muted">
-                    {c.count} {c.count === 1 ? "visit" : "visits"}
-                  </span>
-                  <span className="font-mono text-[0.7rem] text-faint">
-                    last {relativeTime(c.lastSeen)}
-                  </span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
+      <CrawlerPanel crawlers={data.crawlers} />
     </div>
+  );
+}
+
+type CrawlerRowData = { bot: string; count: number; lastSeen: string };
+
+/** Who runs each AI crawler and what it does. `human` = a person fetching your
+ *  page through an AI product; `indexing` = an automated training/search crawl. */
+const CRAWLER_META: Record<
+  string,
+  { who: string; job: string; kind: "human" | "indexing" }
+> = {
+  "ChatGPT-User": {
+    who: "OpenAI",
+    job: "On-demand fetch when a person opens your page inside ChatGPT",
+    kind: "human",
+  },
+  GPTBot: { who: "OpenAI", job: "Trains GPT models", kind: "indexing" },
+  "OAI-SearchBot": {
+    who: "OpenAI",
+    job: "Indexes your site for ChatGPT Search",
+    kind: "indexing",
+  },
+  ClaudeBot: {
+    who: "Anthropic",
+    job: "Trains & improves Claude",
+    kind: "indexing",
+  },
+  PerplexityBot: {
+    who: "Perplexity",
+    job: "Indexes for the Perplexity answer engine",
+    kind: "indexing",
+  },
+  "Google-Extended": {
+    who: "Google",
+    job: "Trains Gemini / Google AI models",
+    kind: "indexing",
+  },
+  Applebot: {
+    who: "Apple",
+    job: "Powers Siri, Spotlight & Apple Intelligence",
+    kind: "indexing",
+  },
+  Bytespider: {
+    who: "ByteDance",
+    job: "Trains TikTok / Doubao AI models",
+    kind: "indexing",
+  },
+  CCBot: {
+    who: "Common Crawl",
+    job: "Open dataset many LLMs train on",
+    kind: "indexing",
+  },
+  Amazonbot: {
+    who: "Amazon",
+    job: "Indexes for Alexa & Amazon AI",
+    kind: "indexing",
+  },
+  "Meta-AI": { who: "Meta", job: "Trains Llama / Meta AI", kind: "indexing" },
+  "cohere-ai": { who: "Cohere", job: "Trains Cohere models", kind: "indexing" },
+};
+
+const UNKNOWN_CRAWLER = {
+  who: "Unknown",
+  job: "AI crawler",
+  kind: "indexing" as const,
+};
+
+function CrawlerRow({ c }: { c: CrawlerRowData }) {
+  const meta = CRAWLER_META[c.bot] ?? UNKNOWN_CRAWLER;
+  return (
+    <li className="flex items-start justify-between gap-3 py-2.5">
+      <span className="flex min-w-0 items-start gap-2">
+        <Bot className="mt-0.5 size-4 shrink-0 text-accent" />
+        <span className="min-w-0">
+          <span className="text-sm text-foreground">
+            {c.bot}
+            <span className="text-muted"> · {meta.who}</span>
+          </span>
+          <span className="mt-0.5 block text-xs text-faint">{meta.job}</span>
+        </span>
+      </span>
+      <span className="flex shrink-0 items-center gap-5">
+        <span className="font-mono text-xs text-muted">
+          {c.count} {c.count === 1 ? "visit" : "visits"}
+        </span>
+        <span className="font-mono text-[0.7rem] text-faint">
+          last {relativeTime(c.lastSeen)}
+        </span>
+      </span>
+    </li>
+  );
+}
+
+function CrawlerPanel({ crawlers }: { crawlers: CrawlerRowData[] }) {
+  const kindOf = (bot: string) => (CRAWLER_META[bot] ?? UNKNOWN_CRAWLER).kind;
+  const human = crawlers.filter((c) => kindOf(c.bot) === "human");
+  const indexing = crawlers.filter((c) => kindOf(c.bot) === "indexing");
+
+  return (
+    <Panel title="AI / LLM crawler visits" className="md:col-span-2">
+      {crawlers.length === 0 ? (
+        <p className="text-sm text-muted">
+          No AI crawlers detected yet — GPTBot, ClaudeBot, PerplexityBot,
+          Google-Extended and others will appear here once they index the site.
+        </p>
+      ) : (
+        <div className="space-y-5">
+          {human.length > 0 && (
+            <div>
+              <p className="eyebrow mb-2 text-[0.6rem]">
+                Human via AI · a person used an AI tool to open your page
+              </p>
+              <ul className="divide-y divide-border">
+                {human.map((c) => (
+                  <CrawlerRow key={c.bot} c={c} />
+                ))}
+              </ul>
+            </div>
+          )}
+          <div>
+            <p className="eyebrow mb-2 text-[0.6rem]">
+              AI training &amp; indexing · automated crawlers
+            </p>
+            {indexing.length === 0 ? (
+              <p className="text-sm text-muted">None yet.</p>
+            ) : (
+              <ul className="divide-y divide-border">
+                {indexing.map((c) => (
+                  <CrawlerRow key={c.bot} c={c} />
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
+    </Panel>
   );
 }
 

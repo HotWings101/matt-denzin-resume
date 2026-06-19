@@ -40,13 +40,13 @@ export function SiteFooter() {
               AI-first Product &amp; Operations Leader — {profile.location}
             </p>
 
-            {/* Handcrafted-in-Texas colophon */}
-            <div className="mt-5 flex items-center gap-2">
-              <TexasFlagIcon className="h-4 w-auto shrink-0 rounded-[2px] opacity-90 ring-1 ring-black/10" />
-              <span className="max-w-[15rem] text-pretty font-mono text-[0.68rem] leading-snug text-faint">
+            {/* Handcrafted-in-Texas colophon → /texas */}
+            <Link href="/texas" className="group mt-5 flex items-center gap-2">
+              <TexasFlagIcon className="h-4 w-auto shrink-0 rounded-[2px] opacity-90 ring-1 ring-black/10 transition-opacity group-hover:opacity-100" />
+              <span className="max-w-[15rem] text-pretty font-mono text-[0.68rem] leading-snug text-faint transition-colors group-hover:text-accent">
                 This website was handcrafted and designed in the state of Texas.
               </span>
-            </div>
+            </Link>
 
             {/* Don't be a dinosaur. */}
             <Link

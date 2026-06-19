@@ -2,7 +2,9 @@ import { SiteNav } from "@/components/site/site-nav";
 import { personJsonLd } from "@/lib/json-ld";
 import { Hero } from "@/components/site/hero";
 import { EthosSection } from "@/components/site/ethos";
+import { Section } from "@/components/site/section";
 import { ExperienceTimeline } from "@/components/site/experience-timeline";
+import { CareerChat } from "@/components/site/career-chat";
 import { SelectedProjectSection } from "@/components/site/selected-project";
 import { EducationSection } from "@/components/site/education";
 import { CapabilitiesTeaser } from "@/components/site/skills";
@@ -30,6 +32,15 @@ export default function Home() {
         <EthosSection />
         <JdAnalyzer />
         <ExperienceTimeline />
+        <Section
+          id="chat"
+          eyebrow="Career chat"
+          title="Interview my career."
+          intro="Ask anything about my background. Answers are generated live and grounded in my résumé — with the sources they draw from cited."
+          grid
+        >
+          <CareerChat className="mx-auto max-w-2xl" />
+        </Section>
         <SelectedProjectSection />
         <Recommendations />
         <EducationSection />

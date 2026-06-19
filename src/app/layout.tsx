@@ -13,7 +13,9 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+// Fallback matches page.tsx/robots.ts/sitemap.ts so metadataBase (which resolves
+// OG/Twitter share images) stays correct even if NEXT_PUBLIC_SITE_URL is unset.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://matthewdenzin.ai";
 const title = `${profile.name} — ${profile.roles[0]} · AI-first`;
 const description = profile.pitch;
 

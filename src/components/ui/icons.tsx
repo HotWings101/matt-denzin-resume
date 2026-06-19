@@ -42,3 +42,41 @@ export function TexasFlagIcon({ className, ...props }: SVGProps<SVGSVGElement>) 
     </svg>
   );
 }
+
+/**
+ * Blocky T-rex glyph (pixel-silhouette style): head + snout upper-right,
+ * tail upper-left, bulky body, two legs. currentColor; size via className.
+ */
+export function TrexIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+      {...props}
+    >
+      {/* head + snout */}
+      <rect x="14" y="0" width="6" height="2" />
+      <rect x="14" y="2" width="8" height="2" />
+      <rect x="14" y="4" width="6" height="2" />
+      <rect x="12" y="6" width="8" height="2" />
+      {/* tail (upper-left) */}
+      <rect x="4" y="4" width="4" height="2" />
+      <rect x="4" y="6" width="6" height="2" />
+      {/* body */}
+      <rect x="6" y="8" width="14" height="2" />
+      <rect x="6" y="10" width="12" height="2" />
+      <rect x="6" y="12" width="14" height="2" />
+      <rect x="6" y="14" width="12" height="2" />
+      {/* legs */}
+      <rect x="6" y="16" width="4" height="2" />
+      <rect x="14" y="16" width="4" height="2" />
+      <rect x="6" y="18" width="4" height="2" />
+      <rect x="14" y="18" width="4" height="2" />
+      {/* feet */}
+      <rect x="4" y="20" width="6" height="2" />
+      <rect x="14" y="20" width="6" height="2" />
+    </svg>
+  );
+}

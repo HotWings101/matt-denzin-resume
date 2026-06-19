@@ -4,6 +4,9 @@ An AI-native résumé and portfolio for **Matthew Denzin, PMP** — built to *de
 AI-product capability, not just describe it. The site is itself a small, instrumented AI
 product with Matt as the subject.
 
+> **New here?** For a plain-English overview of how GitHub, Vercel, and Supabase
+> fit together, see **[docs/how-the-site-works.md](./docs/how-the-site-works.md)**.
+
 ## What it does
 
 - **Interview my career** — a retrieval-grounded (RAG) chat. Ask Matt's 15-year record

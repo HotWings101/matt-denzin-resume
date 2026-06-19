@@ -22,7 +22,7 @@ product with Matt as the subject.
 |-------|--------|
 | Framework | Next.js 16 (App Router, RSC) + TypeScript |
 | Styling | Tailwind v4 · Fraunces + Geist · bespoke design system |
-| AI | Vercel AI SDK v6 via **AI Gateway** (Claude chat + OpenAI embeddings) |
+| AI | Vercel AI SDK v6 + `@ai-sdk/google` — **Google Gemini** (chat, JD analyzer & embeddings) |
 | Data | Supabase Postgres + **pgvector** (RAG), Auth (admin), RLS default-deny |
 | Hosting | Vercel (Fluid Compute) |
 
@@ -42,7 +42,7 @@ product with Matt as the subject.
 
 ```bash
 npm install
-cp .env.example .env.local   # fill in Supabase + AI Gateway values
+cp .env.example .env.local   # fill in Supabase + Gemini values
 npm run dev                  # http://localhost:3000
 ```
 
@@ -66,8 +66,9 @@ npm run resume
 ## Environment
 
 See [`.env.example`](./.env.example). Required: `NEXT_PUBLIC_SUPABASE_URL`,
-`NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `AI_GATEWAY_API_KEY`,
-`ADMIN_EMAILS`. Optional overrides: `CHAT_MODEL`, `EMBEDDING_MODEL`, `NEXT_PUBLIC_SITE_URL`.
+`NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `GOOGLE_GENERATIVE_AI_API_KEY`,
+`ADMIN_EMAILS`. Optional overrides: `CHAT_MODEL` (default `gemini-3.5-flash`),
+`EMBEDDING_MODEL` (default `gemini-embedding-001`), `NEXT_PUBLIC_SITE_URL`.
 
 ## Deployment
 

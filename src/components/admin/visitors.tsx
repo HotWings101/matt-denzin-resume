@@ -65,6 +65,7 @@ function SessionRow({ session: s }: { session: VisitorSession }) {
   const [open, setOpen] = useState(false);
 
   const visitorLabel = s.visitorId?.slice(0, 10) || "anon";
+  const refDomain = domainOf(s.referrer);
   const place = [s.city, s.country].filter(Boolean).join(", ");
   const DeviceIcon =
     s.device && /mobile|phone|tablet/i.test(s.device) ? Smartphone : Monitor;
@@ -101,7 +102,15 @@ function SessionRow({ session: s }: { session: VisitorSession }) {
           </p>
           <p className="mt-0.5 flex items-center gap-2 font-mono text-[0.68rem] text-faint">
             {relativeTime(s.startedAt)}
-            <span className="text-muted">· {s.source}</span>
+            <span className="shrink-0 text-muted">· {s.source}</span>
+            {refDomain && (
+              <span
+                title={s.referrer ?? undefined}
+                className="min-w-0 truncate text-faint"
+              >
+                · {refDomain}
+              </span>
+            )}
             {s.highIntent && (
               <span title={s.intentReasons.join(" · ")} className="text-accent">
                 ★ intent
@@ -387,6 +396,15 @@ function Detail({
 
 function str(v: unknown): string | undefined {
   return typeof v === "string" && v.length > 0 ? v : undefined;
+}
+/** Referring site's hostname (www-stripped), or null for direct/unparseable. */
+function domainOf(referrer: string | null): string | null {
+  if (!referrer) return null;
+  try {
+    return new URL(referrer).hostname.replace(/^www\./, "");
+  } catch {
+    return referrer.slice(0, 40) || null;
+  }
 }
 function num(v: unknown): number | undefined {
   return typeof v === "number" && Number.isFinite(v) ? v : undefined;

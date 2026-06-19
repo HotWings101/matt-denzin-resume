@@ -92,6 +92,11 @@ describe("classifySource", () => {
     expect(classifySource(null, "linkedin")).toBe("LinkedIn");
     expect(classifySource(null, "newsletter")).toBe("Referral");
   });
+  it("treats our own domains as Direct (self-referral), not Referral", () => {
+    expect(classifySource("https://matthewdenzin.ai/experience", null)).toBe("Direct");
+    expect(classifySource("https://matthewdenzin.com/", null)).toBe("Direct");
+    expect(classifySource("https://matt-denzin-resume.vercel.app/", null)).toBe("Direct");
+  });
 });
 
 describe("classifyIntent", () => {

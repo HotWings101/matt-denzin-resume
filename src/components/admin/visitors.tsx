@@ -18,6 +18,7 @@ import {
   Gauge,
 } from "lucide-react";
 import type { VisitorSession, VisitorEvent } from "@/lib/visitors";
+import { isInternalReferrer } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Panel, formatDuration, relativeTime } from "./ui";
 
@@ -438,8 +439,10 @@ const HOST_LABELS: { re: RegExp; label: string }[] = [
   { re: /duckduckgo\.com/, label: "DuckDuckGo" },
 ];
 
-/** Friendly product name for a referrer, falling back to the bare hostname. */
+/** Friendly product name for a referrer, falling back to the bare hostname.
+ *  Returns null for our own domains (self-referrals) so no chip is shown. */
 function friendlyReferrer(referrer: string | null): string | null {
+  if (isInternalReferrer(referrer)) return null;
   const host = domainOf(referrer);
   if (!host) return null;
   for (const h of HOST_LABELS) if (h.re.test(host)) return h.label;

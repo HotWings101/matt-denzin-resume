@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- heirloom photo, self-hosted */
+import Link from "next/link";
 import { Reveal } from "./reveal";
 
 /**
@@ -42,7 +43,15 @@ export function EthosSection() {
             <p className="eyebrow mb-5">Ethos</p>
             <p className="font-display text-balance text-3xl leading-[1.12] tracking-tight text-foreground md:text-[2.6rem]">
               My grandfather taught me how to drive fast and take chances
-              <span className="text-accent"> &mdash; let&apos;s go!</span>
+              <span className="text-accent">
+                {" "}&mdash;{" "}
+                <Link
+                  href="/lets-go"
+                  className="underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
+                >
+                  let&apos;s go!
+                </Link>
+              </span>
             </p>
           </div>
         </Reveal>

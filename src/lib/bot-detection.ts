@@ -1,4 +1,5 @@
 import { detectBotName } from "./crawlers";
+import { isInternalReferrer } from "./site";
 
 export type BotVerdict = "human" | "likely-bot" | "bot";
 
@@ -98,6 +99,10 @@ export function classifySource(
   referrer: string | null,
   utmSource: string | null,
 ): TrafficSource {
+  // A referrer pointing at one of our own hosts is an internal hop, not an
+  // external source — attribute it to Direct (the true source was lost on the hop).
+  if (isInternalReferrer(referrer)) return "Direct";
+
   const host = hostOf(referrer);
   if (host) return sourceFromHost(host) ?? "Referral";
 

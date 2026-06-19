@@ -1,5 +1,6 @@
 import { getAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 import { classifyBot, classifySource } from "@/lib/bot-detection";
+import { isInternalReferrer } from "@/lib/site";
 
 export interface Counted {
   key: string;
@@ -263,7 +264,12 @@ export async function getAnalytics(days = 30): Promise<AnalyticsData> {
       visitors: dayMap.get(day)?.visitors.size ?? 0,
     }));
 
-    const topReferrers = tally(humanSessions.map((s) => refHost(s.referrer)), 10);
+    const topReferrers = tally(
+      humanSessions
+        .filter((s) => !isInternalReferrer(s.referrer))
+        .map((s) => refHost(s.referrer)),
+      10,
+    );
     const devices = tally(humanSessions.map((s) => s.device), 6);
     const browsers = tally(humanSessions.map((s) => s.browser), 8);
     const countries = tally(humanSessions.map((s) => s.country), 12);

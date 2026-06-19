@@ -65,7 +65,9 @@ function SessionRow({ session: s }: { session: VisitorSession }) {
   const [open, setOpen] = useState(false);
 
   const visitorLabel = s.visitorId?.slice(0, 10) || "anon";
-  const refDomain = domainOf(s.referrer);
+  const refLabel = friendlyReferrer(s.referrer);
+  // Hide the referrer chip when it just restates the source bucket (e.g. LinkedIn · LinkedIn).
+  const showRef = refLabel ? !sourceImplies(s.source, refLabel) : false;
   const place = [s.city, s.country].filter(Boolean).join(", ");
   const DeviceIcon =
     s.device && /mobile|phone|tablet/i.test(s.device) ? Smartphone : Monitor;
@@ -103,12 +105,12 @@ function SessionRow({ session: s }: { session: VisitorSession }) {
           <p className="mt-0.5 flex items-center gap-2 font-mono text-[0.68rem] text-faint">
             {relativeTime(s.startedAt)}
             <span className="shrink-0 text-muted">· {s.source}</span>
-            {refDomain && (
+            {showRef && (
               <span
                 title={s.referrer ?? undefined}
                 className="min-w-0 truncate text-faint"
               >
-                · {refDomain}
+                · {refLabel}
               </span>
             )}
             {s.highIntent && (
@@ -405,6 +407,50 @@ function domainOf(referrer: string | null): string | null {
   } catch {
     return referrer.slice(0, 40) || null;
   }
+}
+
+/** Map common referrer hosts to recognizable product names. Order = priority. */
+const HOST_LABELS: { re: RegExp; label: string }[] = [
+  { re: /teams\.(microsoft\.com|cdn\.office\.net)|teams\.live\.com/, label: "Microsoft Teams" },
+  { re: /outlook\.(office|office365|live)\.com|(^|\.)outlook\.com/, label: "Outlook" },
+  { re: /mail\.google\.com/, label: "Gmail" },
+  { re: /(^|\.)slack\.com|slack-redir/, label: "Slack" },
+  { re: /discord(app)?\.com/, label: "Discord" },
+  { re: /(^|\.)t\.me$|(^|\.)telegram\./, label: "Telegram" },
+  { re: /whatsapp\.com|(^|\.)wa\.me/, label: "WhatsApp" },
+  { re: /lnkd\.in|(^|\.)linkedin\.com/, label: "LinkedIn" },
+  { re: /(^|\.)github\.(com|io)/, label: "GitHub" },
+  { re: /(^|\.)notion\.(so|site)/, label: "Notion" },
+  { re: /docs\.google\.com/, label: "Google Docs" },
+  { re: /(^|\.)substack\.com/, label: "Substack" },
+  { re: /(^|\.)medium\.com/, label: "Medium" },
+  { re: /(^|\.)reddit\.com/, label: "Reddit" },
+  { re: /(^|\.)youtube\.com|youtu\.be/, label: "YouTube" },
+  { re: /(^|\.)t\.co$|(^|\.)x\.com|twitter\.com/, label: "X / Twitter" },
+  { re: /facebook\.com|fb\.me/, label: "Facebook" },
+  { re: /(^|\.)instagram\.com/, label: "Instagram" },
+  { re: /(^|\.)indeed\.com/, label: "Indeed" },
+  { re: /(^|\.)glassdoor\./, label: "Glassdoor" },
+  { re: /ziprecruiter\.com/, label: "ZipRecruiter" },
+  { re: /(^|\.)dice\.com/, label: "Dice" },
+  { re: /(^|\.)google\./, label: "Google" },
+  { re: /(^|\.)bing\.com/, label: "Bing" },
+  { re: /duckduckgo\.com/, label: "DuckDuckGo" },
+];
+
+/** Friendly product name for a referrer, falling back to the bare hostname. */
+function friendlyReferrer(referrer: string | null): string | null {
+  const host = domainOf(referrer);
+  if (!host) return null;
+  for (const h of HOST_LABELS) if (h.re.test(host)) return h.label;
+  return host;
+}
+
+/** True when the referrer label just restates the traffic-source bucket. */
+function sourceImplies(source: string, label: string): boolean {
+  const s = source.toLowerCase();
+  const l = label.toLowerCase();
+  return s.includes(l) || l.includes(s);
 }
 function num(v: unknown): number | undefined {
   return typeof v === "number" && Number.isFinite(v) ? v : undefined;

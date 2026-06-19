@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X, FileText } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { profile } from "@/data/resume";
 import { cn } from "@/lib/utils";
@@ -91,6 +92,17 @@ export function SiteNav() {
               {link.label}
             </a>
           ))}
+          <Link
+            href="/good-vibes"
+            className={cn(
+              "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+              solid
+                ? "text-muted hover:text-foreground"
+                : "text-white/80 hover:text-white",
+            )}
+          >
+            Good Vibes
+          </Link>
           <a
             href="/Matthew-Denzin-Resume.pdf"
             target="_blank"
@@ -148,6 +160,13 @@ export function SiteNav() {
                   {link.label}
                 </a>
               ))}
+              <Link
+                href="/good-vibes"
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-surface-2 hover:text-accent"
+              >
+                Good Vibes
+              </Link>
               <a
                 href="/Matthew-Denzin-Resume.pdf"
                 target="_blank"

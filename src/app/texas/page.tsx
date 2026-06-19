@@ -38,12 +38,8 @@ export default function TexasPage() {
             }}
           />
 
-          {/* Wordmark, centered */}
-          <div className="relative mx-auto flex min-h-[100svh] w-full max-w-4xl flex-col items-center justify-center px-6 text-center">
-            <h1 className="font-display text-6xl font-medium leading-[0.95] tracking-tight text-white [text-shadow:0_3px_30px_rgba(0,0,0,0.7)] sm:text-7xl md:text-8xl">
-              Texas
-            </h1>
-          </div>
+          {/* Heading kept for accessibility/SEO; the image stands alone visually */}
+          <h1 className="sr-only">Texas</h1>
 
           {/* Back link */}
           <div className="absolute inset-x-0 bottom-8 z-10 flex justify-center">

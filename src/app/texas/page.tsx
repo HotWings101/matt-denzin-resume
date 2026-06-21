@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element -- full-bleed AI-generated hero */
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { SiteNav } from "@/components/site/site-nav";
@@ -21,11 +21,13 @@ export default function TexasPage() {
           className="relative min-h-[100svh] w-full overflow-hidden"
         >
           {/* Full-bleed Texas collage hero */}
-          <img
+          <Image
             src="/hero/texas.jpg"
             alt="A bold collage of Texas icons: the Texas State Capitol front and center, the Dallas and Houston skylines, the Alamo, the Lone Star flag, oil derricks, a monster truck, a football, a cowboy hat, and longhorn cattle under a golden Texas sunset."
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
           />
 
           {/* Scrims for text legibility (warm dark, matching the homepage hero) */}

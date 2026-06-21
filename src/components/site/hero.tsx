@@ -1,4 +1,5 @@
-/* eslint-disable @next/next/no-img-element -- hero banner + small brand SVGs */
+/* eslint-disable @next/next/no-img-element -- small brand logos below the hero */
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { profile, stats, brandLogos } from "@/data/resume";
 import { Reveal } from "./reveal";
@@ -8,12 +9,14 @@ export function Hero() {
     <section id="top" data-section="hero" className="relative">
       {/* Full-bleed cinematic hero image (Alamo · Texas dusk · future-tech) */}
       <div className="relative min-h-[88vh] w-full overflow-hidden">
-        <img
+        <Image
           src="/hero/hero-banner.jpg"
           alt="The Alamo at dusk beneath a warm Texas sunset and a futuristic constellation data-grid sky, with the San Antonio skyline in the distance"
-          fetchPriority="high"
+          fill
+          priority
+          sizes="100vw"
           // Mobile (portrait) crops to the Alamo on the right; desktop keeps the full centered frame.
-          className="absolute inset-0 h-full w-full object-cover object-[85%_center] md:object-center"
+          className="object-cover object-[85%_center] md:object-center"
         />
         {/* Scrims for text legibility */}
         <div

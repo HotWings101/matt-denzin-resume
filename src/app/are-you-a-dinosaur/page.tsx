@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element -- full-bleed AI-generated hero */
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { SiteNav } from "@/components/site/site-nav";
@@ -21,11 +21,13 @@ export default function AreYouADinosaurPage() {
           className="relative min-h-[100svh] w-full overflow-hidden"
         >
           {/* Full-bleed asteroid-impact / T-rex hero */}
-          <img
+          <Image
             src="/hero/are-you-a-dinosaur.jpg"
             alt="A Tyrannosaurus rex silhouetted on a ridge, roaring up at a flaming asteroid streaking down and impacting Earth on the horizon while other dinosaurs flee through a burning prehistoric landscape."
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
           />
 
           {/* Scrims for text legibility (warm dark, matching the homepage hero) */}

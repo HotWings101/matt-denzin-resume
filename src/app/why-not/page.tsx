@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element -- full-bleed AI-generated hero */
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { SiteNav } from "@/components/site/site-nav";
@@ -22,11 +22,13 @@ export default function WhyNotPage() {
           className="relative min-h-[100svh] w-full overflow-hidden"
         >
           {/* Full-bleed rocket-launch hero */}
-          <img
+          <Image
             src="/hero/why-not.jpg"
             alt="A space shuttle rocket launching off the pad at golden-hour dawn, with massive plumes of fire and billowing smoke against a dramatic warm sky."
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
           />
 
           {/* Scrims for text legibility (warm dark, matching the homepage hero) */}

@@ -9,6 +9,9 @@
 - Education: B.A. Advertising (minor Marketing), University of North Texas. Certification: Project Management Professional (PMP), PMI, 2018.
 - Location: Dallas–Fort Worth Metroplex, Texas, USA.
 
+## Full details
+- Complete profile + grounded knowledge corpus: https://matthewdenzin.ai/llms-full.txt
+
 ## Contact
 - Email: mattdenzin@yahoo.com
 - LinkedIn: https://www.linkedin.com/in/matt-denzin-pmp-6b326110

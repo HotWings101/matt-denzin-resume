@@ -19,14 +19,48 @@ import {
 } from "@react-pdf/renderer";
 import type { Position } from "../src/data/resume";
 import {
-  profile,
-  competencies,
-  experience,
-  education,
-  certifications,
+  profile as rawProfile,
+  competencies as rawCompetencies,
+  experience as rawExperience,
+  education as rawEducation,
+  certifications as rawCertifications,
 } from "../src/data/resume";
 
+// ATS hardening: normalize "smart" punctuation to plain ASCII in the PDF so
+// every parser (and plain-text copy/paste) reads dashes, quotes, and ranges
+// correctly. The website keeps its real typography — this only affects the PDF.
+const SMART: [RegExp, string][] = [
+  [/[–—]/g, "-"], // en/em dash → hyphen
+  [/[‘’‚′]/g, "'"], // curly single quotes / prime → '
+  [/[“”„″]/g, '"'], // curly double quotes → "
+  [/…/g, "..."], // ellipsis → ...
+  [/ /g, " "], // non-breaking space → space
+];
+function ascii(str: string): string {
+  return SMART.reduce((out, [re, rep]) => out.replace(re, rep), str);
+}
+
+/** Recursively ASCII-normalize every string in the structured résumé data so
+ *  the PDF never emits smart punctuation. The website data stays untouched. */
+function deepAscii<T>(value: T): T {
+  if (typeof value === "string") return ascii(value) as unknown as T;
+  if (Array.isArray(value)) return value.map((v) => deepAscii(v)) as unknown as T;
+  if (value !== null && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value)) out[k] = deepAscii(v);
+    return out as T;
+  }
+  return value;
+}
+
 const e = React.createElement;
+
+// ASCII-normalized copies used only for the PDF.
+const profile = deepAscii(rawProfile);
+const competencies = deepAscii(rawCompetencies);
+const experience = deepAscii(rawExperience);
+const education = deepAscii(rawEducation);
+const certifications = deepAscii(rawCertifications);
 
 // Spacing knobs — tuned so the content fills exactly two full pages (the next
 // increment overflows onto a third). Override via RESUME_SP / RESUME_LH to retune
@@ -141,7 +175,7 @@ function Bullet({ text }: { text: string }) {
 
 function Header() {
   const contactBits = [
-    e(Text, { key: "loc" }, profile.location),
+    e(Text, { key: "loc" }, "Dallas-Fort Worth, TX"),
     e(Text, { key: "s1", style: s.sep }, "   ·   "),
     e(Link, { key: "tel", style: s.contactLink, src: `tel:${profile.phone.replace(/[^0-9+]/g, "")}` }, profile.phone),
     e(Text, { key: "s2", style: s.sep }, "   ·   "),
@@ -205,7 +239,7 @@ function Experience() {
               View,
               { style: s.posHeader },
               e(Text, { style: s.posTitle }, pos.title),
-              e(Text, { style: s.posDates }, `${pos.start} – ${pos.end}`),
+              e(Text, { style: s.posDates }, `${pos.start} - ${pos.end}`),
             ),
             ...bulletsFor(pos).map((b, i) => e(Bullet, { key: i, text: b })),
           ),
@@ -258,7 +292,7 @@ function EducationCert() {
 const Resume = e(
   Document,
   {
-    title: `${profile.name} — Résumé`,
+    title: `${profile.name} - Résumé`,
     author: profile.name,
     subject: profile.tagline,
     creator: SITE_LABEL,

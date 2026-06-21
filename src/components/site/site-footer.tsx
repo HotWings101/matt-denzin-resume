@@ -16,6 +16,7 @@ const quickLinks: FooterLink[] = [
   { href: "/#recommendations", label: "Endorsements" },
   { href: "/#education", label: "Education" },
   { href: "/capabilities", label: "Capabilities" },
+  { href: "/faq", label: "FAQ" },
   { href: "/#contact", label: "Contact" },
 ];
 

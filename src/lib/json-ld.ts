@@ -32,7 +32,7 @@ export function personJsonLd(siteUrl: string) {
       "@type": "Place",
       name: "Dallas–Fort Worth Metroplex, Texas, USA",
     },
-    sameAs: [profile.linkedin],
+    sameAs: [profile.linkedin, "https://github.com/HotWings101"],
     knowsAbout: [
       "AI Product Management",
       "Large Language Models",
@@ -49,5 +49,20 @@ export function personJsonLd(siteUrl: string) {
       name: e.school,
     })),
     worksFor: { "@type": "Organization", name: experience[0]?.name },
+  };
+}
+
+/**
+ * schema.org WebSite JSON-LD — helps search + answer-engines understand the
+ * site as a distinct entity and attribute it to Matt.
+ */
+export function webSiteJsonLd(siteUrl: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: `${profile.name} — Portfolio`,
+    url: siteUrl,
+    inLanguage: "en-US",
+    author: { "@type": "Person", name: profile.name, url: siteUrl },
   };
 }

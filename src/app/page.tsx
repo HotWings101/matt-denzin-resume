@@ -1,5 +1,5 @@
 import { SiteNav } from "@/components/site/site-nav";
-import { personJsonLd } from "@/lib/json-ld";
+import { personJsonLd, webSiteJsonLd } from "@/lib/json-ld";
 import { Hero } from "@/components/site/hero";
 import { EthosSection } from "@/components/site/ethos";
 import { Section } from "@/components/site/section";
@@ -23,7 +23,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(personJsonLd(siteUrl)),
+          __html: JSON.stringify([
+            personJsonLd(siteUrl),
+            webSiteJsonLd(siteUrl),
+          ]),
         }}
       />
       <SiteNav />
